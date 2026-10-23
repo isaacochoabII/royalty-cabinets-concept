@@ -1,0 +1,236 @@
+---
+import Base from '../layouts/Base.astro';
+import {business, formEndpoint} from '../data/site';
+
+const title = 'Get a Quote | Cabinet Installation | Royalty Cabinets';
+const description = 'Get a cabinet installation quote from Royalty Cabinets. Short forms for builders and developers, homeowners and investors, and cabinet manufacturers. Or call (506) 875-1527.';
+
+const paths = [
+  {id: 'builders', label: 'Builders & developers', hint: 'Multi-unit, new construction'},
+  {id: 'homeowners', label: 'Homeowners & investors', hint: 'Kitchens, vanities, flips, rentals'},
+  {id: 'manufacturers', label: 'Cabinet manufacturers', hint: 'An install partner for your jobs'},
+];
+---
+<Base title={title} description={description} breadcrumb="Get a quote">
+  <section class="intro">
+    <div class="wrap">
+      <p class="eyebrow">Get a quote</p>
+      <h1>Tell us what you’re building.</h1>
+      <p class="lead">Pick the one that fits. Short forms, and we call you back to talk it through. Rather talk now? Call <a href={`tel:${business.tel}`}>{business.phone}</a> or email <a href={`mailto:${business.email}`}>{business.email}</a>.</p>
+      <nav class="paths" aria-label="Choose your quote type">
+        {paths.map((p) => (
+          <a class="path" href={`#${p.id}`} data-path={p.id}>
+            <span class="path-label">{p.label}</span>
+            <span class="path-hint">{p.hint}</span>
+          </a>
+        ))}
+      </nav>
+    </div>
+  </section>
+
+  <section class="forms">
+    <div class="wrap layout">
+      <div>
+        <form id="builders" class="panel" data-form method="post" action={formEndpoint || undefined} enctype="multipart/form-data">
+          <input type="hidden" name="form_type" value="Builder / developer" />
+          <h2>Builders & developers</h2>
+          <p class="muted">Send what you have. Drawings and a cabinet schedule tell us more than any form could.</p>
+          <div class="fields">
+            <div class="field"><label for="b-company">Company</label><input id="b-company" name="company" autocomplete="organization" required /></div>
+            <div class="field"><label for="b-name">Your name</label><input id="b-name" name="name" autocomplete="name" required /></div>
+            <div class="field"><label for="b-phone">Phone</label><input id="b-phone" name="phone" type="tel" autocomplete="tel" required /></div>
+            <div class="field"><label for="b-email">Email</label><input id="b-email" name="email" type="email" autocomplete="email" required /></div>
+            <div class="field"><label for="b-location">Project location</label><input id="b-location" name="location" placeholder="Dieppe, NB" required /></div>
+            <div class="field"><label for="b-units">Number of apartments</label><input id="b-units" name="apartments" inputmode="numeric" placeholder="36" required /></div>
+            <div class="field"><label for="b-start">Target start</label><input id="b-start" name="start_date" type="date" /></div>
+            <div class="field"><label for="b-occupancy">Occupancy date</label><input id="b-occupancy" name="occupancy_date" type="date" /></div>
+            <div class="field full"><label for="b-supplier">Who’s supplying the cabinets?</label>
+              <select id="b-supplier" name="supplier" required>
+                <option value="">Choose one</option>
+                <option>A local manufacturer</option>
+                <option>Flat-pack (ready to assemble)</option>
+                <option>Not chosen yet</option>
+              </select>
+            </div>
+            <div class="field full"><label for="b-files">Drawings or cabinet schedule (optional)</label><input id="b-files" name="files" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.dwg,.xlsx,.csv" /></div>
+            <div class="field full"><label for="b-notes">Anything else we should know? (optional)</label><textarea id="b-notes" name="notes" rows="4" placeholder="Phasing, site conditions, what’s worrying you about the schedule"></textarea></div>
+          </div>
+          <button class="btn" type="submit">Send project details <span class="arrow" aria-hidden="true">↗</span></button>
+          <p class="status" role="status" aria-live="polite"></p>
+        </form>
+
+        <form id="homeowners" class="panel" data-form method="post" action={formEndpoint || undefined} enctype="multipart/form-data">
+          <input type="hidden" name="form_type" value="Homeowner / investor" />
+          <h2>Homeowners & investors</h2>
+          <p class="muted">A few quick questions. A photo or your plan gets you a straighter number.</p>
+          <fieldset>
+            <legend>Where are your cabinets from?</legend>
+            <div class="choices">
+              <label class="choice"><input type="radio" name="source" value="IKEA" required /> IKEA</label>
+              <label class="choice"><input type="radio" name="source" value="Kent / Home Depot / Home Hardware" /> Kent, Home Depot or Home Hardware</label>
+              <label class="choice"><input type="radio" name="source" value="Flat-pack ordered online" /> Flat-pack, ordered online</label>
+              <label class="choice"><input type="radio" name="source" value="Local manufacturer" /> A local manufacturer</label>
+              <label class="choice"><input type="radio" name="source" value="Still shopping" /> Still shopping</label>
+            </div>
+          </fieldset>
+          <div class="fields">
+            <div class="field"><label for="h-name">Your name</label><input id="h-name" name="name" autocomplete="name" required /></div>
+            <div class="field"><label for="h-phone">Phone</label><input id="h-phone" name="phone" type="tel" autocomplete="tel" required aria-describedby="h-phone-help" /><p class="help" id="h-phone-help">We’ll only call about your installation.</p></div>
+            <div class="field"><label for="h-email">Email (optional)</label><input id="h-email" name="email" type="email" autocomplete="email" /></div>
+            <div class="field"><label for="h-town">Town</label><input id="h-town" name="town" placeholder="Riverview" required /></div>
+            <div class="field"><label for="h-project">What are we installing?</label>
+              <select id="h-project" name="project" required>
+                <option value="">Choose one</option>
+                <option>Kitchen</option>
+                <option>Bathroom vanity</option>
+                <option>Kitchen and vanity</option>
+                <option>Something else</option>
+              </select>
+            </div>
+            <div class="field"><label for="h-timing">Timing</label>
+              <select id="h-timing" name="timing">
+                <option>Cabinets are here, ready when you are</option>
+                <option>Delivery in the next month</option>
+                <option>One to three months out</option>
+                <option>Just planning</option>
+              </select>
+            </div>
+            <div class="field full"><label for="h-files">Photo of the cabinets or your plan (optional)</label><input id="h-files" name="files" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.heic" /></div>
+            <div class="field full"><label for="h-notes">Anything else? (optional)</label><textarea id="h-notes" name="notes" rows="3" placeholder="Flip, rental, your own home: whatever helps"></textarea></div>
+          </div>
+          <button class="btn" type="submit">Get my install quote <span class="arrow" aria-hidden="true">↗</span></button>
+          <p class="status" role="status" aria-live="polite"></p>
+        </form>
+
+        <form id="manufacturers" class="panel" data-form method="post" action={formEndpoint || undefined}>
+          <input type="hidden" name="form_type" value="Manufacturer" />
+          <h2>Cabinet manufacturers</h2>
+          <p class="muted">Tell us about the next job that needs an install crew, ideally before it’s two weeks out.</p>
+          <div class="fields">
+            <div class="field"><label for="m-company">Company</label><input id="m-company" name="company" autocomplete="organization" required /></div>
+            <div class="field"><label for="m-name">Your name</label><input id="m-name" name="name" autocomplete="name" required /></div>
+            <div class="field"><label for="m-phone">Phone</label><input id="m-phone" name="phone" type="tel" autocomplete="tel" required /></div>
+            <div class="field"><label for="m-email">Email</label><input id="m-email" name="email" type="email" autocomplete="email" required /></div>
+            <div class="field full"><label for="m-volume">How often do you need installers?</label>
+              <select id="m-volume" name="volume">
+                <option>One project now and then</option>
+                <option>A few projects a year</option>
+                <option>Ongoing, multi-unit</option>
+              </select>
+            </div>
+            <div class="field full"><label for="m-notes">Your next project that needs installation (optional)</label><textarea id="m-notes" name="notes" rows="4" placeholder="Location, number of kitchens, delivery dates"></textarea></div>
+          </div>
+          <button class="btn" type="submit">Start the conversation <span class="arrow" aria-hidden="true">↗</span></button>
+          <p class="status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <aside class="side">
+        <div class="card">
+          <h3>Rather talk?</h3>
+          <a class="phone" href={`tel:${business.tel}`}>{business.phone}</a>
+          <a href={`mailto:${business.email}`}>{business.email}</a>
+          <p>{business.street}, {business.city}, {business.region} {business.postal}</p>
+        </div>
+        <div class="card">
+          <h3>What happens next</h3>
+          <ol class="steps compact">
+            <li><p>We call you with questions. We ask a lot of them, because that’s how the quote holds.</p></li>
+            <li><p>You get a straight number before anything starts.</p></li>
+          </ol>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <script define:vars={{connected: Boolean(formEndpoint), phone: business.phone, email: business.email}}>
+    const forms = [...document.querySelectorAll('[data-form]')];
+    const links = [...document.querySelectorAll('[data-path]')];
+
+    // Show one form at a time once JS is running; without JS all three stay visible.
+    function show(id) {
+      const target = forms.some((f) => f.id === id) ? id : 'homeowners';
+      forms.forEach((f) => (f.hidden = f.id !== target));
+      links.forEach((l) => l.setAttribute('aria-current', l.dataset.path === target ? 'true' : 'false'));
+    }
+    links.forEach((l) => l.addEventListener('click', (e) => {
+      e.preventDefault();
+      history.replaceState(null, '', `#${l.dataset.path}`);
+      show(l.dataset.path);
+      document.getElementById(l.dataset.path).scrollIntoView({behavior: 'smooth', block: 'start'});
+    }));
+    show(location.hash.slice(1));
+
+    forms.forEach((form) => form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const status = form.querySelector('.status');
+      if (!connected) {
+        status.textContent = `This form isn’t connected yet. Please call ${phone} or email ${email}.`;
+        return;
+      }
+      const button = form.querySelector('button');
+      button.disabled = true;
+      status.textContent = 'Sending…';
+      try {
+        const res = await fetch(form.action, {method: 'POST', body: new FormData(form), headers: {Accept: 'application/json'}});
+        if (!res.ok) throw new Error(res.statusText);
+        form.querySelector('.fields')?.remove();
+        form.querySelector('fieldset')?.remove();
+        button.remove();
+        status.textContent = 'Thanks – we’ll be in touch.';
+      } catch {
+        button.disabled = false;
+        status.textContent = `That didn’t send. Please call ${phone} or email ${email}.`;
+      }
+    }));
+  </script>
+</Base>
+
+<style>
+  .intro { padding: var(--space-16) 0 var(--space-8); }
+  .intro .eyebrow { margin-bottom: var(--space-6); }
+  .intro .lead { margin-top: var(--space-6); }
+  .intro .lead a { color: var(--text); text-decoration: none; border-bottom: var(--hairline) solid var(--accent); }
+  .paths { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); margin-top: var(--space-8); }
+  .path { display: grid; gap: var(--space-1); padding: var(--space-4) var(--space-5); background: var(--surface-raised); border: var(--hairline) solid var(--border); border-top: 2px solid var(--border); text-decoration: none; color: var(--text); transition: border-color 200ms ease-out; }
+  .path-label { font: 400 20px/28px var(--font-heading); letter-spacing: 0.02em; }
+  .path-hint { font-size: 14px; line-height: 22px; color: var(--text-muted); }
+  .path:hover { border-color: var(--border-control); }
+  .path[aria-current='true'] { border-top-color: var(--accent); border-color: var(--text); border-top-width: 2px; }
+  .forms { padding: var(--space-8) 0 var(--space-24); }
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: var(--space-12); align-items: start; }
+  .panel { background: var(--surface-raised); border: var(--hairline) solid var(--border); padding: var(--space-8); scroll-margin-top: calc(var(--header-height) + var(--space-4)); }
+  .panel + .panel { margin-top: var(--space-8); }
+  .panel h2 { margin-bottom: var(--space-2); }
+  .fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6); margin: var(--space-8) 0; }
+  .full { grid-column: 1 / -1; }
+  .field { display: grid; gap: var(--space-2); align-content: start; }
+  label, legend { font: 500 13px/18px var(--font-body); letter-spacing: 0.06em; color: var(--text); }
+  input, select, textarea { font: 400 15px/24px var(--font-body); letter-spacing: 0.015em; color: var(--text); background: var(--surface-raised); border: var(--hairline) solid var(--border-control); border-radius: 0; min-height: var(--control-height); padding: 0 var(--space-4); width: 100%; }
+  textarea { padding: var(--space-3) var(--space-4); min-height: 120px; resize: vertical; }
+  input[type='file'] { padding: var(--space-2) var(--space-3); }
+  input::placeholder, textarea::placeholder { color: var(--text-muted); }
+  input:hover, select:hover, textarea:hover { border-color: var(--text); }
+  .help { margin: 0; font-size: 13px; line-height: 18px; color: var(--text-muted); }
+  fieldset { border: 0; padding: 0; margin: var(--space-8) 0 0; }
+  legend { margin-bottom: var(--space-3); }
+  .choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-3); }
+  .choice { display: flex; align-items: center; gap: var(--space-3); min-height: var(--control-height); padding: var(--space-3) var(--space-4); border: var(--hairline) solid var(--border-control); background: var(--surface-raised); font: 400 15px/22px var(--font-body); letter-spacing: 0.015em; cursor: pointer; }
+  .choice input { width: 18px; min-height: 18px; height: 18px; margin: 0; padding: 0; accent-color: var(--text); flex: none; }
+  .choice:has(input:checked) { border-color: var(--text); box-shadow: inset 2px 0 0 var(--accent); }
+  .status { margin: var(--space-4) 0 0; font-weight: 500; color: var(--text); }
+  .side { display: grid; gap: var(--space-6); position: sticky; top: calc(var(--header-height) + var(--space-6)); }
+  .side .card a { color: var(--text); text-decoration: none; }
+  .side h3 { margin-bottom: var(--space-2); }
+  .phone { font: 300 26px/34px var(--font-heading); letter-spacing: 0.015em; }
+  .compact { grid-template-columns: 1fr; gap: var(--space-4); }
+  @media (max-width: 1023px) { .layout { grid-template-columns: 1fr; } .side { position: static; } }
+  @media (max-width: 719px) {
+    .intro { padding: var(--space-12) 0 var(--space-6); }
+    .paths, .fields { grid-template-columns: 1fr; }
+    .paths { gap: var(--space-2); }
+    .path { padding: var(--space-3) var(--space-4); }
+    .path-label { font-size: 18px; line-height: 24px; }
+    .panel { padding: var(--space-6) var(--space-4); }
+  }
+</style>

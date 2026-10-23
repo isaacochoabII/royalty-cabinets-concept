@@ -1,6 +1,14 @@
 node_modules/
 dist/
+.astro/
 .DS_Store
 .env
 .env.*
 !.env.example
+
+# Client strategy and research (contains private interview material)
+strategy/
+
+# Original full-resolution photos (too large for the repo; web versions live in public/photos)
+/assets/
+Royalty-Cabinets-Design-System.zip

@@ -1,0 +1,171 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Photo from '../components/Photo.astro';
+import Quote from '../components/Quote.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import {reviews} from '../data/site';
+import {url} from '../data/url';
+import {faqSchema, serviceSchema, type FaqItem} from '../data/faq';
+
+const title = 'Multi-Unit Cabinet Installation for Builders & Developers | Royalty Cabinets';
+const description = 'Cabinet and vanity installation for apartment, condo and duplex projects in New Brunswick, Nova Scotia and PEI. Sign-off sheets in every apartment, floor-by-floor reports, one accountable crew.';
+
+const run = [
+  {title: 'Before we start: the questions.', text: 'Concrete floors mean hammer drills and more time, because any island or peninsula with plumbing or electrical gets anchored to the floor. Steel studs or wood? Is there backing? We want to know what we’re walking into so we can send the right crew with the right number of guys.'},
+  {title: 'Measure again before the cabinets ship.', text: 'The drawings say the wall is 12 feet. A couple of weeks before delivery, we measure again. A vanity that won’t fit between the walls gets caught on paper, not on install day.'},
+  {title: 'Apartment by apartment, with a sign-off sheet.', text: 'Every finished apartment gets a sheet on the fridge gable or a visible cabinet: the date, who installed the kitchen and the vanity, and a checklist (mitres, holes filled, countertops caulked). It’s a check for my guys and a communication board for everyone else. If a cabinet isn’t in, the sheet says why.'},
+  {title: 'Tracked in real time.', text: 'The crew photographs every sign-off sheet into our project board: a board for each floor, an item for each apartment, tagged with a name and a date. That’s immediate accountability. When you call, I can give you a full status from wherever I am.'},
+  {title: 'Floor to capacity, then a full report.', text: '“Capacity” means we’ve done everything we can until the missing or damaged cabinets show up. Then you get a report with status, dates and photos, and the supplier gets it too. We report after the second apartment, not after the eighty-fourth.'},
+  {title: 'Tie it up. No deficiencies left.', text: 'Every missing piece is tracked by email from the day we flag it. When it lands, we come back and close it out, so there are no deficiencies left at the end of the project.'},
+];
+
+const faq: FaqItem[] = [
+  {q: 'Do you supply the cabinets?', a: 'No. We install. The cabinets come from the manufacturer you choose, local or flat-pack, and we work with them on site.'},
+  {q: 'Will you install cabinets from any manufacturer?', a: 'Yes. We’ve worked with a lot of the manufacturers in the region, and we know what works on site and what doesn’t. If we see an issue, we tell them early so they can fix it.'},
+  {q: 'How many guys will you have on site?', a: 'Honestly, that’s the wrong question. Tell us what you need done and by when, and we staff to that. On one 84-apartment building there were weeks where one installer kept pace with every other trade, and weeks where we doubled down to hit the date.'},
+  {q: 'How long does an 84-apartment building take?', a: 'With the full crew and a site that’s ready for us, about six weeks. Timelines move in real life. We adapt when you fall behind, and we pull out and come back when you’re not ready for us.'},
+  {q: 'What happens when cabinets show up damaged or missing?', a: 'We note it on the sign-off sheet, photograph it, and email you and the supplier so there’s a dated record. We finish everything else on the floor, then come back to close those apartments when the cabinets arrive.'},
+  {q: 'Do you charge extras?', a: 'Your problems can become our problems. They can’t become our cost. If the same site issues keep costing us time, we’ll talk about it openly. It’s not calling you out. It’s calling you up.'},
+  {q: 'Do you work outside Greater Moncton?', a: 'Yes, including Fredericton, Nova Scotia and PEI. Once we know the scope, we set up shop, get it done, and head home to the next job.'},
+];
+---
+<Base
+  title={title}
+  description={description}
+  breadcrumb="Builders & developers"
+  schema={[serviceSchema('Multi-unit cabinet installation', description, 'Cabinet installation'), faqSchema(faq)]}
+>
+  <PageHero
+    eyebrow="Builders & developers"
+    title="The trade you <span class='accent-text'>don’t have to manage.</span>"
+    lede="Multi-unit cabinet and vanity installation across New Brunswick, Nova Scotia and PEI. Apartments, condos, duplex developments. When Royalty is on your site, you know where we’re at, what we’re doing, and what we can do."
+  >
+    <div slot="actions" class="actions">
+      <a class="btn" href={url('estimates/#builders')}>Send your drawings and dates <span class="arrow" aria-hidden="true">↗</span></a>
+      <a class="arrow-link" href="#how">How we run a building <span aria-hidden="true">→</span></a>
+    </div>
+    <Photo src="photos/installer-anchoring-floor" ratio="4 / 5" position="42% center" eager alt="A Royalty Cabinets installer drilling into a concrete floor" />
+  </PageHero>
+
+  <section class="section sunken">
+    <div class="wrap grid-2">
+      <div class="section-header flush">
+        <p class="eyebrow">The real problem</p>
+        <h2>Your job is to manage the project. Not the trades.</h2>
+      </div>
+      <div class="prose">
+        <p class="lead">The hardest part of construction is the calendar. One trade that doesn’t show for a week, and the flooring guys can’t finish, the painters can’t finish, the plumbers can’t set the sinks because the finish panels aren’t in.</p>
+        <p>When we’re on your site, you don’t chase us. If we won’t be there, you hear it in advance, so you can move another crew into that apartment. If you call with a question, we have the answer.</p>
+        <p>We never push the trade in front of us. That just creates frustration between trades. But when we walk in, the pace changes. People know we’re not there to clock in and clock out.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="how">
+    <div class="wrap">
+      <div class="section-header">
+        <p class="eyebrow">How we work</p>
+        <h2>We make an 84-unit look like clockwork.</h2>
+        <p class="lead">You don’t need complicated systems to get results. Simplicity is where it’s at: simple systems everybody actually uses.</p>
+      </div>
+      <div class="grid-2">
+        <ol class="detail-steps">
+          {run.slice(0, 3).map((s) => <li><div><h3>{s.title}</h3><p>{s.text}</p></div></li>)}
+        </ol>
+        <ol class="detail-steps" start="4" style="counter-reset: dstep 3">
+          {run.slice(3).map((s) => <li><div><h3>{s.title}</h3><p>{s.text}</p></div></li>)}
+        </ol>
+      </div>
+      <div class="grid-2 photos">
+        <Photo shot="Close-up of a filled-in sign-off sheet taped inside a finished apartment." ratio="3 / 2" alt="A Royalty Cabinets sign-off sheet in a finished apartment" />
+        <Photo shot="Screenshot of a floor report (client details blurred): status, dates, damage photos." ratio="3 / 2" alt="A floor-by-floor installation report" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section sunken">
+    <div class="wrap grid-2 center-y">
+      <div class="stack">
+        <div class="section-header flush">
+          <p class="eyebrow">When schedules move</p>
+          <h2>We adapt. And we don’t slow down the trade behind us.</h2>
+        </div>
+        <div class="prose">
+          <p class="lead">Timelines always move. Sometimes the site isn’t ready and we pull out to another project. Sometimes it falls behind, deliveries land every week with no lead time, and you need us to double down.</p>
+          <p>When that happens, I ask my guys what we’re willing and able to do. It’s usually a yes: early starts, a Saturday, whatever it takes so we’re not the reason the job slows down. One of our installers came in at 4:45 on a Friday morning to finish an apartment before an appointment.</p>
+          <p>And if a wall isn’t ready but the peninsula is, we set the peninsula so your plumber can keep working.</p>
+        </div>
+      </div>
+      <Quote review={reviews.brendon} />
+    </div>
+  </section>
+
+  <section class="section" id="case">
+    <div class="wrap">
+      <div class="section-header">
+        <p class="eyebrow">Case study</p>
+        <h2>Three buildings. 84 apartments each. One opening date that didn’t move.</h2>
+        <p class="lead">The owner knew our work and hired us directly. He told us it didn’t matter who was making the cabinets: he wanted us installing them.</p>
+      </div>
+      <div class="grid-2">
+        <div class="prose">
+          <p>We started on the top floor, like we always do. After two apartments we were already seeing damage and issues that would turn into deficiencies across the building. So instead of waiting for every floor to be ready before writing a report, we reported right away and worked the problems with the builder and the manufacturer, so they wouldn’t repeat 84 times.</p>
+          <p>Building one opened on schedule in February. Building two is going smoother than building one, because the issues we raised got fixed. Building three is planned for next year.</p>
+          <p class="muted">After building one, the owner called to talk through which cabinet supplier to use for building two. We gave him the pros and cons of each, with no bias. We told him to stay with the same company: they’d made a few mistakes, and they were going to fix them.</p>
+        </div>
+        <Quote review={reviews.pierre} />
+      </div>
+      <div class="grid-2 photos">
+        <Photo src="photos/tall-pantry" ratio="4 / 5" alt="A tall pantry cabinet installed in one of the 84-apartment buildings" />
+        <Photo src="photos/vanity" ratio="4 / 5" position="45% center" alt="A bathroom vanity installed in one of the 84-apartment buildings" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section sunken" id="flat-pack">
+    <div class="wrap grid-2">
+      <div class="section-header flush">
+        <p class="eyebrow">Flat-pack</p>
+        <h2>Buy the cabinets that make sense. We’ll assemble and install them.</h2>
+      </div>
+      <div class="prose">
+        <p class="lead">Ready-to-assemble cabinets ship flat, so they cost less to buy and less to move. On a building, the savings can reach six figures. The catch: somebody has to assemble and install every box, on schedule.</p>
+        <p>We’ve done flat-pack buildings and know what it takes. You get to shop for the cabinets that fit your budget, instead of taking a seven-out-of-ten cabinet because it came with installation.</p>
+        <p class="muted">Cheaper isn’t always cheap, either. A one-man crew can maybe do one apartment a day. There are 18 on a floor and you need it done in two weeks. That price stops being cheap when he’s not available, when he falls behind, or when he leaves for a site that’s on schedule. Our price is what it takes to serve at the highest level.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="manufacturers">
+    <div class="wrap grid-2">
+      <div class="stack">
+        <div class="section-header flush">
+          <p class="eyebrow">Manufacturers</p>
+          <h2>Book us when you sell. Not when you’re stuck.</h2>
+        </div>
+        <div class="prose">
+          <p class="lead">Work goes up and down. When it’s up you need a lot of installers. When it’s down you lay them off, and when it comes back you’re short. Calling us two weeks before a 60-apartment install is a gamble, for you and for your client.</p>
+          <p>Bring us in when the job is sold. On site, we work for your cabinets to look their best. If we see an issue, you hear it from us first, with photos, so you can fix it before it repeats. If you win, we win.</p>
+        </div>
+        <a class="btn" href={url('estimates/#manufacturers')}>Talk about your next project <span class="arrow" aria-hidden="true">↗</span></a>
+      </div>
+      <Quote review={reviews.lewis} />
+    </div>
+  </section>
+
+  <CtaBand
+    eyebrow="Builders"
+    title="Send us your drawings and dates."
+    text="Number of apartments, start date, occupancy date, and who’s supplying the cabinets."
+    href="estimates/#builders"
+    label="Start a builder quote"
+  />
+
+  <Faq items={faq} />
+</Base>
+
+<style>
+  .photos { margin-top: var(--space-12); }
+</style>

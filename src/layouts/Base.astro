@@ -1,0 +1,86 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import {business, noindex} from '../data/site';
+import {url, sitePath} from '../data/url';
+
+interface Props {
+  title: string;
+  description: string;
+  // Extra JSON-LD objects for this page (Service, FAQPage, …).
+  schema?: object[];
+  breadcrumb?: string;
+}
+const {title, description, schema = [], breadcrumb} = Astro.props;
+const path = sitePath(Astro.url.pathname);
+const canonical = new URL(path, Astro.site).href;
+const origin = Astro.site!.origin;
+
+const businessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HomeAndConstructionBusiness',
+  '@id': `${origin}/#business`,
+  name: business.name,
+  url: `${origin}/`,
+  logo: `${origin}/brand/logo-full-colour.png`,
+  telephone: business.tel,
+  email: business.email,
+  description: 'Cabinet installation for builders, developers, cabinet manufacturers and homeowners in Greater Moncton and the Maritimes. Installation only.',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: business.street,
+    addressLocality: business.city,
+    addressRegion: business.region,
+    postalCode: business.postal,
+    addressCountry: 'CA',
+  },
+  areaServed: business.areas,
+  sameAs: [business.facebook],
+};
+const crumbs = breadcrumb && {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {'@type': 'ListItem', position: 1, name: 'Home', item: `${origin}/`},
+    {'@type': 'ListItem', position: 2, name: breadcrumb, item: canonical},
+  ],
+};
+const jsonLd = [businessSchema, crumbs, ...schema].filter(Boolean);
+---
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#f6f2e9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1e1f1c" media="(prefers-color-scheme: dark)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={business.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={`${origin}/photos/drone-84-apartment-buildings-1600.jpg`} />
+    <meta property="og:locale" content="en_CA" />
+    <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={url('apple-touch-icon.png')} />
+    <link rel="sitemap" href={url('sitemap-index.xml')} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <style is:global>
+      .skip { position: absolute; left: -9999px; top: 8px; z-index: 100; background: var(--surface-raised); color: var(--text); padding: 10px 16px; }
+      .skip:focus { left: 8px; }
+    </style>
+  </body>
+</html>

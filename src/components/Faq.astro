@@ -1,0 +1,33 @@
+---
+import type {FaqItem} from '../data/faq';
+interface Props { items: FaqItem[]; title?: string; sunken?: boolean }
+const {items, title = 'Straight answers', sunken = false} = Astro.props;
+---
+<section class:list={['section', {sunken}]}>
+  <div class="wrap faq-grid">
+    <div class="section-header flush">
+      <p class="eyebrow">Questions</p>
+      <h2>{title}</h2>
+    </div>
+    <div class="list">
+      {items.map((item) => (
+        <details>
+          <summary>{item.q}</summary>
+          <p set:html={item.a} />
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: var(--space-16); align-items: start; }
+  .list { border-top: var(--hairline) solid var(--border); }
+  details { border-bottom: var(--hairline) solid var(--border); }
+  summary { cursor: pointer; list-style: none; padding: var(--space-5) var(--space-8) var(--space-5) 0; position: relative; font: 400 20px/28px var(--font-heading); letter-spacing: 0.02em; color: var(--text); }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: '+'; position: absolute; right: 0; top: var(--space-5); font: 300 22px/28px var(--font-heading); color: var(--text-accent); }
+  details[open] summary::after { content: '–'; }
+  details p { margin: 0 0 var(--space-6); color: var(--text-muted); max-width: var(--measure); }
+  @media (max-width: 1023px) { .faq-grid { grid-template-columns: 1fr; gap: var(--space-8); } }
+</style>

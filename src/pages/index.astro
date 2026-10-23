@@ -1,0 +1,191 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Photo from '../components/Photo.astro';
+import Quote from '../components/Quote.astro';
+import CtaBand from '../components/CtaBand.astro';
+import {business, facts, reviews} from '../data/site';
+import {url} from '../data/url';
+
+const sources = [
+  {title: 'IKEA kitchens', text: 'Bought an IKEA kitchen? We assemble it and install it.', href: 'ikea-kitchen-installation-moncton/', link: 'IKEA installation'},
+  {title: 'Kent, Home Depot, Home Hardware', text: 'Book your own install date instead of waiting on the store’s crew.', href: 'installation/', link: 'Cabinet installation'},
+  {title: 'Flat-pack', text: 'Ready-to-assemble cabinets ship flat. We assemble every box, then install it.', href: 'installation/#flat-pack', link: 'Flat-pack assembly'},
+  {title: 'Local manufacturers', text: 'We install for local manufacturers, and we want their cabinets to look their best on site.', href: 'builders/#manufacturers', link: 'For manufacturers'},
+];
+
+const system = [
+  {title: 'We ask first', text: 'Concrete or wood floors, steel or wood studs, backing: we find out before we schedule the crew.'},
+  {title: 'Every apartment signed off', text: 'Each finished kitchen gets a sign-off sheet with the date, the installer and a checklist.'},
+  {title: 'Everything tracked', text: 'A photo of every sheet goes into our project board, so we can answer your questions from anywhere.'},
+  {title: 'A report every floor', text: 'Status, dates and photos of damaged or missing cabinets go to the contractor and the supplier.'},
+];
+---
+<Base
+  title="Royalty Cabinets | Cabinet Installation in Moncton, Dieppe & the Maritimes"
+  description="Cabinet installation for multi-unit builders, developers, cabinet manufacturers and homeowners in Greater Moncton and the Maritimes. Kent, Home Depot, Home Hardware, IKEA, flat-pack or local cabinets."
+>
+  <PageHero
+    eyebrow="Cabinet installation"
+    title="We install cabinets.<br /><span class='accent-text'>You don’t have to manage us.</span>"
+    lede="From 84-unit buildings to the IKEA kitchen in your flip. You choose the cabinets. We install them right, on time, and signed off one apartment at a time."
+  >
+    <div slot="actions" class="actions">
+      <a class="btn" href={url('estimates/#builders')}>I’m building a project <span class="arrow" aria-hidden="true">↗</span></a>
+      <a class="arrow-link" href={url('estimates/#homeowners')}>I have cabinets to install <span aria-hidden="true">→</span></a>
+    </div>
+    <Photo src="photos/on-site-hard-hat" ratio="4 / 5" position="center 30%" eager alt="On site at a multi-unit building in Greater Moncton" />
+  </PageHero>
+
+  <section class="proof-row">
+    <div class="wrap grid-4">
+      <div class="feature"><h2 class="subheading">{facts.rating} on Google</h2><p>{facts.reviewCount} reviews from builders, suppliers and other trades.</p></div>
+      <div class="feature"><h2 class="subheading">{facts.installed}</h2><p>Cabinets installed in {facts.installedLabel}.</p></div>
+      <div class="feature"><h2 class="subheading">Any cabinet</h2><p>Kent, Home Depot, Home Hardware, IKEA, flat-pack or a local manufacturer.</p></div>
+      <div class="feature"><h2 class="subheading">The Maritimes</h2><p>Greater Moncton, Fredericton, Nova Scotia and PEI.</p></div>
+    </div>
+  </section>
+
+  <section class="section sunken">
+    <div class="wrap grid-2">
+      <div class="section-header flush">
+        <p class="eyebrow">From the job site</p>
+        <h2>The cabinet manufacturer fell short. The opening date didn’t move.</h2>
+      </div>
+      <Quote review={reviews.pierre} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-header">
+        <p class="eyebrow">Your cabinets</p>
+        <h2>Buy them wherever makes sense. We’ll install them.</h2>
+        <p class="lead">There’s a time and a place for every product. A rental, a flip and the house you’re staying in don’t need the same kitchen. Ask us. You’ll get a straight answer, even when it means we don’t get the job.</p>
+      </div>
+      <div class="grid-4">
+        {sources.map((s) => (
+          <a class="card" href={url(s.href)}>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+            <span class="card-gap"></span>
+            <span class="arrow-link">{s.link} <span aria-hidden="true">→</span></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section sunken">
+    <div class="wrap">
+      <div class="section-header">
+        <p class="eyebrow">How we work</p>
+        <h2>We don’t just put boxes on the wall.</h2>
+        <p class="lead">Knowing how to put cabinets on a wall is easy. Knowing why you start with a certain box, and why you adjust a certain way, is the job. So is making sure nobody has to chase us for answers.</p>
+      </div>
+      <ol class="steps">
+        {system.map((s) => <li><h3>{s.title}</h3><p>{s.text}</p></li>)}
+      </ol>
+      <div class="actions"><a class="arrow-link" href={url('builders/#how')}>See how we run a building <span aria-hidden="true">→</span></a></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-header">
+        <p class="eyebrow">Who we work for</p>
+        <h2>One crew. Three kinds of clients.</h2>
+        <p class="lead">If we can do it a hundred times on a multi-unit project without missing the deadline, one kitchen in your home is in good hands.</p>
+      </div>
+      <div class="grid-3">
+        <a class="card" href={url('builders/')}>
+          <p class="eyebrow">Builders</p>
+          <h3>The trade you don’t have to manage.</h3>
+          <p>Multi-unit cabinet and vanity installation, tracked apartment by apartment and reported floor by floor. Your job is to manage the project, not the trades.</p>
+          <span class="card-gap"></span>
+          <span class="arrow-link">For builders <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="card" href={url('builders/#manufacturers')}>
+          <p class="eyebrow">Manufacturers</p>
+          <h3>Your install partner.</h3>
+          <p>Selling more than your crew can install? Book us when you sell, not when you’re stuck two weeks out.</p>
+          <span class="card-gap"></span>
+          <span class="arrow-link">For manufacturers <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="card" href={url('installation/')}>
+          <p class="eyebrow">Homeowners</p>
+          <h3>You bought the cabinets. We install them right.</h3>
+          <p>Kitchens, vanities, IKEA and flat-pack, for your home, your flip or your rental.</p>
+          <span class="card-gap"></span>
+          <span class="arrow-link">For homeowners <span aria-hidden="true">→</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section sunken">
+    <div class="wrap grid-2 center-y">
+      <Photo src="photos/drone-84-apartment-buildings" ratio="3 / 2" alt="Drone view of two of the 84-apartment buildings in the development" />
+      <div class="stack">
+        <div class="section-header flush">
+          <p class="eyebrow">On site now</p>
+          <h2>One development. Three buildings. 84 apartments each.</h2>
+        </div>
+        <p class="lead">Building one opened on schedule in February. Building two is underway, and building three is planned for next year.</p>
+        <p class="muted measure">On building one we flagged problems with the cabinets after the first two apartments, not after eighty-four. That’s why building two is going smoother. It all comes down to communication.</p>
+        <a class="arrow-link" href={url('builders/#case')}>Read how it went <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid-2 center-y">
+      <div class="stack">
+        <div class="section-header flush">
+          <p class="eyebrow">The team</p>
+          <h2>Raphael keeps it moving. Phil is the proof.</h2>
+        </div>
+        <p class="big-line">“I’m the glue that keeps things moving and makes sure we stay on track and on time. Phil is the proof of my concept.”</p>
+        <p class="muted measure">Raphael runs the schedule, the logistics and the calls. Phil, our foreman, has been installing with Royalty for over six years and runs the crew on site. We don’t have the biggest team. We have an efficient one.</p>
+      </div>
+      <Photo src="photos/installer-in-kitchen" ratio="4 / 5" position="48% center" alt="A Royalty Cabinets installer walking through a kitchen on site" />
+    </div>
+  </section>
+
+  <section class="section sunken">
+    <div class="wrap grid-2">
+      <div class="section-header flush">
+        <p class="eyebrow">Reviews</p>
+        <h2>{facts.rating} on Google from {facts.reviewCount} reviews. Builders, suppliers and other trades.</h2>
+      </div>
+      <Quote review={reviews.lyndi} />
+    </div>
+  </section>
+
+  <CtaBand
+    eyebrow="Get a quote"
+    title="Tell us what you’re building."
+    text="Send your drawings and dates, or a photo of the cabinets in your garage."
+    href="estimates/"
+    label="Get a quote"
+  />
+
+  <section class="section">
+    <div class="wrap grid-2">
+      <div class="section-header flush">
+        <p class="eyebrow">Where we work</p>
+        <h2>Based in Dieppe. Working across the Maritimes.</h2>
+      </div>
+      <div class="prose">
+        <p class="lead">Greater Moncton every day: Moncton, Dieppe and Riverview. Fredericton, Nova Scotia and PEI when the project calls for it. Once we know the scope, we set up shop, get it done, and head home to the next job.</p>
+        <p><a class="arrow-link" href={`tel:${business.tel}`}>Call {business.phone} <span aria-hidden="true">↗</span></a></p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .proof-row { background: var(--surface); padding-bottom: var(--space-24); }
+  .proof-row .subheading { margin: 0; }
+  @media (max-width: 719px) { .proof-row { padding-bottom: var(--space-16); } }
+</style>

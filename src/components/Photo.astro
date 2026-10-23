@@ -1,0 +1,32 @@
+---
+// A photo as shot (no grade, square corners), or until one exists a sand placeholder with a caption describing the shot.
+// `src` is a public/photos base name without size suffix: photos/<name> → <name>-800.jpg and <name>-1600.jpg.
+import {url} from '../data/url';
+interface Props { src?: string; alt?: string; shot?: string; ratio?: string; position?: string; sizes?: string; eager?: boolean }
+const {src, alt = '', shot, ratio = '4 / 3', position = 'center', sizes = '(max-width: 1023px) 100vw, 50vw', eager = false} = Astro.props;
+---
+{src ? (
+  <img
+    class="photo"
+    src={url(`${src}-1600.jpg`)}
+    srcset={`${url(`${src}-800.jpg`)} 800w, ${url(`${src}-1600.jpg`)} 1600w`}
+    sizes={sizes}
+    alt={alt}
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : undefined}
+    decoding="async"
+    style={`aspect-ratio:${ratio};object-position:${position}`}
+  />
+) : (
+  <div class="photo placeholder" style={`aspect-ratio:${ratio}`} role="img" aria-label={alt || shot}>
+    <p class="caption"><span>Photo to come</span>{shot}</p>
+  </div>
+)}
+
+<style>
+  .photo { width: 100%; height: auto; object-fit: cover; background: var(--surface-sunken); }
+  .placeholder { display: flex; align-items: flex-end; padding: var(--space-4); border: var(--hairline) solid var(--border); }
+  .placeholder p { margin: 0; max-width: 34em; }
+  .placeholder span { display: block; font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase; color: var(--text); margin-bottom: var(--space-1); }
+  :global(.section.sunken) .placeholder { background: var(--surface); }
+</style>

@@ -24,6 +24,9 @@ jobs:
       - run: npm install --global pnpm@11.25.0
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
+        env:
+          # The Pages copy is a preview: keep it out of search so it never competes with royaltycabinets.ca.
+          PUBLIC_NOINDEX: 'true'
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

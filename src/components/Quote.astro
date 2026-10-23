@@ -1,0 +1,22 @@
+---
+// Design-system quote: one genuine client quote on sand, Outfit Light, gold hairline before the attribution. No stars.
+import type {Review} from '../data/site';
+interface Props { review: Review; small?: boolean }
+const {review, small = false} = Astro.props;
+---
+<figure class:list={['quote', {small}]}>
+  <blockquote><p>“{review.quote}”</p></blockquote>
+  <figcaption>{review.name} · {review.context} · Google review</figcaption>
+</figure>
+
+<style>
+  .quote { margin: 0; padding: var(--space-12) var(--space-8); background: var(--surface-sunken); }
+  blockquote { margin: 0; }
+  blockquote p { margin: 0; font: 300 26px/36px var(--font-heading); letter-spacing: 0.015em; color: var(--text); max-width: 760px; }
+  .small { padding: var(--space-8) var(--space-6); }
+  .small blockquote p { font-size: 20px; line-height: 30px; }
+  figcaption { margin-top: var(--space-6); font: 500 13px/18px var(--font-body); letter-spacing: 0.06em; color: var(--text-muted); }
+  figcaption::before { content: ''; display: inline-block; width: 24px; vertical-align: middle; margin-right: var(--space-3); border-top: var(--hairline) solid var(--accent); }
+  :global(.section.sunken) .quote { background: var(--surface-raised); }
+  @media (max-width: 719px) { .quote { padding: var(--space-8) var(--space-6); } blockquote p { font-size: 21px; line-height: 31px; } }
+</style>

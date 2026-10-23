@@ -1,9 +1,15 @@
 {
-  "name": "royalty-cabinets-concept",
-  "version": "1.0.0",
+  "name": "royalty-cabinets-site",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
-  "scripts": {"dev": "vite --host 127.0.0.1", "build": "vite build", "preview": "vite preview --host 127.0.0.1"},
-  "dependencies": {"react": "^19.0.0", "react-dom": "^19.0.0", "@react-three/fiber": "^9.0.0", "three": "^0.180.0", "gsap": "^3.13.0"},
-  "devDependencies": {"vite": "^7.0.0"}
+  "scripts": {
+    "dev": "astro dev --host 127.0.0.1",
+    "build": "astro build",
+    "preview": "astro preview --host 127.0.0.1"
+  },
+  "dependencies": {
+    "astro": "7.4.2",
+    "@astrojs/sitemap": "3.7.4"
+  }
 }

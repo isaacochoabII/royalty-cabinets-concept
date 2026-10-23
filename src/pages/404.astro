@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import {url} from '../data/url';
+---
+<Base title="Page not found | Royalty Cabinets" description="That page doesn’t exist. Head back to Royalty Cabinets.">
+  <section class="section">
+    <div class="wrap">
+      <div class="section-header flush">
+        <p class="eyebrow">Not found</p>
+        <h1>That page isn’t here.</h1>
+        <p class="lead">The site was rebuilt and some pages moved.</p>
+      </div>
+      <div class="actions">
+        <a class="btn" href={url()}>Home <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="arrow-link" href={url('installation/')}>Cabinet installation <span aria-hidden="true">→</span></a>
+        <a class="arrow-link" href={url('estimates/')}>Get a quote <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+</Base>

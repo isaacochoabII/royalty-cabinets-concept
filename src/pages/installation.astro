@@ -1,0 +1,173 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Photo from '../components/Photo.astro';
+import Quote from '../components/Quote.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import {reviews} from '../data/site';
+import {url} from '../data/url';
+import {faqSchema, serviceSchema, type FaqItem} from '../data/faq';
+
+const title = 'Kitchen Cabinet Installation in Moncton, Dieppe & Riverview | Royalty Cabinets';
+const description = 'Bought your cabinets at Kent, Home Depot, Home Hardware or IKEA, ordered flat-pack, or from a local manufacturer? We assemble and install kitchens and vanities across Greater Moncton, on a date you pick.';
+
+const sources = [
+  {title: 'IKEA', text: 'Your IKEA kitchen, assembled and installed.', href: 'ikea-kitchen-installation-moncton/', link: 'IKEA installation'},
+  {title: 'Kent, Home Depot, Home Hardware', text: 'Store-bought cabinets installed on your date, not when their crew gets to you.', href: 'estimates/#homeowners', link: 'Get a quote'},
+  {title: 'Flat-pack', text: 'Ready-to-assemble cabinets shipped to your door. We build every box and install it.', href: '#flat-pack', link: 'How flat-pack works'},
+  {title: 'A local manufacturer', text: 'Your cabinets are on order from a local shop. We install them on schedule.', href: 'estimates/#homeowners', link: 'Get a quote'},
+];
+
+const included = [
+  'Assembling flat-pack and ready-to-assemble cabinets',
+  'Finding the studs and pre-drilling, so every screw lands where it should',
+  'Anchoring islands and peninsulas with plumbing or electrical to the floor',
+  'Finished panels and fillers',
+  'Vanities and linen cabinets',
+  'Adjusting doors so the gaps line up',
+  'Cleaning up and finishing the final details before we leave',
+];
+
+const faq: FaqItem[] = [
+  {q: 'Will you install cabinets I bought at Kent, Home Depot or Home Hardware?', a: 'Yes. We install cabinets bought at Kent, Home Depot, Home Hardware or IKEA, ordered flat-pack, or made by a local manufacturer.'},
+  {q: 'How much does it cost to install kitchen cabinets?', a: 'It depends on the variables: assembled or flat-pack, how many boxes, what the walls and floors are like. Send us a photo or your plan and we’ll give you a straight number before anything starts.'},
+  {q: 'Why not use the store’s installation service?', a: 'You control the date. When the cabinets are ready but the store’s installers aren’t, you wait two or three more weeks. Book us for a date in advance and the cabinets just have to show up.'},
+  {q: 'Do you assemble flat-pack cabinets?', a: 'Yes, assembly and installation as one job. We do it on multi-unit buildings, so your kitchen gets the same crew.'},
+  {q: 'What if a cabinet arrives damaged or a piece is missing?', a: 'We tell you exactly what’s missing or damaged, with photos, so you can get it replaced. We install everything else and come back to finish that piece.'},
+  {q: 'Do you install bathroom vanities?', a: 'Yes, vanities and linen cabinets, on their own or with a kitchen.'},
+  {q: 'Do you sell or design cabinets?', a: 'No. We install. You buy the cabinets wherever makes sense for your project, and we install them.'},
+  {q: 'What areas do you cover?', a: 'Moncton, Dieppe, Riverview and Greater Moncton. Ask us about anything further out.'},
+];
+---
+<Base
+  title={title}
+  description={description}
+  breadcrumb="Cabinet installation"
+  schema={[serviceSchema('Kitchen cabinet installation', description, 'Cabinet installation'), faqSchema(faq)]}
+>
+  <PageHero
+    eyebrow="Cabinet installation"
+    title="You bought the cabinets. <span class='accent-text'>We’ll install them right.</span>"
+    lede="Kent, Home Depot, Home Hardware, IKEA, flat-pack shipped to your door, or a local manufacturer. Kitchens and vanities, installed by the same crew that does multi-unit buildings."
+  >
+    <div slot="actions" class="actions">
+      <a class="btn" href={url('estimates/#homeowners')}>Get an install quote <span class="arrow" aria-hidden="true">↗</span></a>
+      <a class="arrow-link" href={url('ikea-kitchen-installation-moncton/')}>IKEA kitchens <span aria-hidden="true">→</span></a>
+    </div>
+    <Photo src="photos/finished-kitchen" ratio="4 / 3" eager alt="A kitchen installed by Royalty Cabinets: wood-grain cabinets, a tall pantry and a black faucet" />
+  </PageHero>
+
+  <section class="section sunken">
+    <div class="wrap">
+      <div class="section-header">
+        <p class="eyebrow">Your cabinets</p>
+        <h2>Buy wherever you want. We install what you bring us.</h2>
+        <p class="lead">A lot of people don’t know this is an option. You don’t have to take a seven-out-of-ten cabinet because the store includes installation. Buy the nine-out-of-ten and have it installed separately.</p>
+      </div>
+      <div class="grid-4">
+        {sources.map((s) => (
+          <a class="card" href={url(s.href)}>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+            <span class="card-gap"></span>
+            <span class="arrow-link">{s.link} <span aria-hidden="true">→</span></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid-2">
+      <div class="stack">
+        <div class="section-header flush">
+          <p class="eyebrow">Your timeline</p>
+          <h2>You control the date.</h2>
+        </div>
+        <div class="prose">
+          <p class="lead">When you buy cabinets and installation from the same place, the cabinets can be ready while their installers aren’t. Nobody tells you. You just wait another two or three weeks.</p>
+          <p>Lock in your install date with us ahead of time, and the only thing that has to happen is the delivery.</p>
+        </div>
+        <p class="big-line">If we can do it a hundred times on a multi-unit project without missing the deadline, <span class="accent-text">one kitchen in your home is in good hands.</span></p>
+      </div>
+      <div class="card included">
+        <h3>What’s included</h3>
+        <ul class="checks">{included.map((i) => <li>{i}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section sunken" id="flat-pack">
+    <div class="wrap grid-2 center-y">
+      <Photo src="photos/installer-setting-panel" ratio="4 / 3" alt="A Royalty Cabinets installer setting a tall cabinet panel" />
+      <div class="stack">
+        <div class="section-header flush">
+          <p class="eyebrow">Flat-pack</p>
+          <h2>Ready to assemble isn’t ready to install.</h2>
+        </div>
+        <div class="prose">
+          <p class="lead">Ready-to-assemble cabinets cost less to buy and less to ship. Somebody still has to build every box.</p>
+          <p>We assemble and install flat-pack cabinets on multi-unit buildings. Your kitchen gets the same crew.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="investors">
+    <div class="wrap grid-2">
+      <div class="stack">
+        <div class="section-header flush">
+          <p class="eyebrow">Flips and rentals</p>
+          <h2>There’s a time and a place for every product.</h2>
+        </div>
+        <p class="lead">The right kitchen for a flip isn’t the right kitchen for a rental, and neither is the right kitchen for the house you’re staying in. Here’s how we see it.</p>
+      </div>
+      <ol class="detail-steps">
+        <li><div><h3>Flipping to sell</h3><p>If the house is decent but the kitchen is dated, an IKEA kitchen at $10,000 to $12,000 installed makes it look good and helps buyers picture themselves cooking there. That cost gets absorbed in the sale. Put $30,000 into it and it’s money you might never get back, because what’s new to you is a blank canvas to the next owner.</p></div></li>
+        <li><div><h3>Rentals and Airbnbs</h3><p>Go medium. Renters are hard on a kitchen. Too cheap and you’re redoing it in five years. A $40,000 kitchen in a place rented every weekend is money you won’t get back. Pick something affordable that holds up.</p></div></li>
+      </ol>
+    </div>
+    <div class="wrap investor-quote"><Quote review={reviews.hailey} /></div>
+  </section>
+
+  <section class="section sunken">
+    <div class="wrap">
+      <div class="section-header">
+        <p class="eyebrow">How it works</p>
+        <h2>Four steps. A straight number.</h2>
+      </div>
+      <ol class="steps">
+        <li><h3>Tell us what you have</h3><p>Where the cabinets are from, a photo or your plan, and your timing.</p></li>
+        <li><h3>Get a straight number</h3><p>We ask a lot of questions up front, because that’s how the quote holds.</p></li>
+        <li><h3>We install</h3><p>Assembled, set and secured, with anything missing flagged right away.</p></li>
+        <li><h3>We clean up</h3><p>The final details done and the mess gone before we leave.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid-2 center-y">
+      <div class="section-header flush">
+        <p class="eyebrow">Reviews</p>
+        <h2>From a cabinet supplier who sees our work.</h2>
+      </div>
+      <Quote review={reviews.lewis} />
+    </div>
+  </section>
+
+  <CtaBand
+    eyebrow="Homeowners"
+    title="Got cabinets? Let’s get them installed."
+    text="Send a photo or your plan, and your timing."
+    href="estimates/#homeowners"
+    label="Get an install quote"
+  />
+
+  <Faq items={faq} />
+</Base>
+
+<style>
+  .included h3 { margin-bottom: var(--space-4); }
+  .investor-quote { margin-top: var(--space-12); }
+</style>

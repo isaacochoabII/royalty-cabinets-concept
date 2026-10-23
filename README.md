@@ -1,53 +1,51 @@
-# Royalty Cabinets — React concept
+# Royalty Cabinets website
 
-An interactive website concept for Royalty Cabinets, with an animated kitchen reveal on desktop and mobile.
+The new royaltycabinets.ca: a static Astro site, positioned around Royalty as the cabinet installer *you don't have to manage*, and written in Raphael's own words. The look follows the Royalty Cabinets design system v1.1 (LIF Media): cream and charcoal, a touch of gold, Outfit and DM Sans, square corners and hairlines.
 
-[Open the live preview](https://isaacochoabII.github.io/royalty-cabinets-concept/)
+[Open the preview](https://isaacochoabII.github.io/royalty-cabinets-concept/) (it's set to noindex and never competes with the live domain).
 
-![Kitchen concept](kitchen-preview.jpg)
+## Pages
 
-## Start and build
+| URL | Purpose |
+|---|---|
+| `/` | Positioning, proof, the three client types |
+| `/builders/` | Multi-unit builders, developers and manufacturers: how a building runs, case study, FAQ |
+| `/installation/` | Homeowners and investors: buy anywhere, we install; flat-pack; how much kitchen a flip or rental needs |
+| `/ikea-kitchen-installation-moncton/` | IKEA kitchen assembly and installation in Greater Moncton |
+| `/estimates/` | Three short quote forms (builders, homeowners, manufacturers) |
 
-Requires Node.js 22.12+ (or Node 20.19+). Use the included pnpm lockfile.
+`/installation/` and `/estimates/` keep the paths from the old WordPress site, so existing links and rankings carry over.
+
+## Run and build
+
+Requires Node 22.23+ and pnpm 11 (`npx pnpm@11.25.0` works if pnpm isn't installed).
 
 ```sh
 pnpm install
-pnpm dev --port 8090
-pnpm build
-pnpm preview --port 8091
+pnpm dev        # http://127.0.0.1:4321
+pnpm build      # static output in dist/
 ```
 
-The HTML file must be served through the development server or from the built `dist/` directory. Opening the source HTML directly as a file will not run the React application.
+## Where things live
 
-## Experience
+- `src/styles/global.css`: design system tokens (light and dark themes) and shared styles. Fonts are self-hosted from `src/assets/fonts/`.
+- `src/data/site.ts`: business details, approved facts, and the review excerpts used across pages. Reviews still need each reviewer's permission (design system rule).
+- `public/photos/`: web versions of the shoot (800 and 1600 px, resized only, no grade). Pass the base name to `Photo`, e.g. `src="photos/finished-kitchen"`. Full-resolution originals stay in `/assets/`, which git ignores.
+- `public/brand/`: logo files from the design system (full colour for light backgrounds, cream wordmark for dark).
+- `src/pages/`: one file per page. Copy lives in the page files.
+- `src/components/Photo.astro`: shows a labelled "Photo to come" block with the shot description until a real `src` is passed. Remaining placeholders (sign-off sheet, floor report, two IKEA shots) are the outstanding shot list.
+- `src/data/faq.ts`: FAQ items render on the page and as FAQPage structured data from the same source.
 
-- Original logo is preserved as the supplied PNG.
-- Main dark background is #1B1B1A; white/ivory and muted gold support it.
-- Desktop: three large cabinet fronts glide into their final positions as the camera reveals a complete kitchen. The room emerges through lighting/material color, without translucent overlapping geometry.
-- The scene includes base and upper cabinets, an island, countertop, sink and faucet, cooktop, hood, refrigerator and pendant lights.
-- GSAP ScrollTrigger drives a reversible, smoothed timeline. React Three Fiber renders Three.js with physically based materials and environment lighting.
-- Canvas uses demand rendering and is invalidated during the timeline. Device pixel ratio is capped at 1.5 and shadow maps at 1024px.
-- Under 900px, a lightweight 3D profile preserves the same panel-to-kitchen story: 1× pixel ratio, simple box geometry, no shadow maps, no environment-map generation, fewer island details, a portrait camera, and a shorter 280svh scroll sequence. Reduced-motion users receive the normal-scrolling photo hero without importing the 3D module.
-- If the desktop component fails, the photo fallback remains available.
-- Visible Pause/Resume control stops the animated scene while allowing normal page scrolling.
+## Before launch
 
-## Important scope
-
-The kitchen is an original procedural concept scene, not a scan or manufacturer-approved model of Royalty products. It demonstrates the art direction, layout and choreography. It is not a photorealistic product rendering. A production finish can replace the meshes with an approved optimized GLB without changing the narrative structure.
-
-Images and factual copy are based on royaltycabinets.ca. Emotional headlines and the three-step narrative are proposed copy. No lead form is connected; the estimate CTA links to the existing estimates page.
-
-## Key files
-
-- `src/main.jsx`: page, mobile/reduced-motion gate and fallbacks.
-- `src/DesktopHero.jsx`: responsive 3D renderer, lighting, meshes and scroll timeline.
-- `src/styles.css`: layout, palette and responsive presentation.
-- `public/assets/`: existing website photography and unchanged logo.
-
-## Checks
-
-Production build completed. Browser checks covered the desktop WebGL scene and scroll progress, Pause/Resume, narrow layouts at 390px and 320px, and a 1× canvas and the animated kitchen on mobile. Physical-device performance remains a production validation task.
+- **Forms:** set `PUBLIC_FORM_ENDPOINT` to a form service URL (Formspree, Basin, etc.). File uploads need a plan that accepts attachments. Until then, the forms ask visitors to call or text.
+- **Photos:** shoot the remaining placeholders. Don't use the van photo, since it shows the old (506) 855-3043 number.
+- **Facts:** confirm the open items in `src/data/site.ts` with Raphael.
+- **Domain:** move royaltycabinets.ca DNS and email to Raphael's accounts, and 301-redirect old URLs that aren't rebuilt yet (`/about-us/`, `/supply/`, `/gallery/`, `/careers/`).
+- **Search setup:** Search Console and GA4.
 
 ## Publishing
 
-Every push to `main` builds and publishes the site through GitHub Actions to GitHub Pages. The workflow uses the included lockfile. Enable **Settings → Pages → Source → GitHub Actions**. The production base path is configured for this repository; local development remains at `/`.
+Every push to `main` builds and deploys the preview to GitHub Pages, with `PUBLIC_NOINDEX=true` so it stays out of search. A production deploy at the root domain needs no base path and no noindex.
+
+Strategy and research notes are kept in the gitignored `strategy/` folder because they quote private interviews. Don't commit them.

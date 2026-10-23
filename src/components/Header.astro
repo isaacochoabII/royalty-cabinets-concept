@@ -1,0 +1,50 @@
+---
+import {business, nav} from '../data/site';
+import {url, sitePath} from '../data/url';
+const current = sitePath(Astro.url.pathname);
+---
+<header class="site-header">
+  <div class="bar">
+    <a class="logo" href={url()}>
+      <img class="logo-light" src={url('brand/logo-full-colour.png')} width="640" height="139" alt="Royalty Cabinets" />
+      <img class="logo-dark" src={url('brand/logo-cream.png')} width="640" height="139" alt="Royalty Cabinets" />
+    </a>
+    <nav class="nav" aria-label="Main">
+      {nav.map((item) => <a href={url(item.href)} aria-current={current === `/${item.href}` ? 'page' : undefined}>{item.label}</a>)}
+      <a href={`tel:${business.tel}`}>{business.phone}</a>
+      <a class="btn btn-sm" href={url('estimates/')}>Get a quote <span class="arrow" aria-hidden="true">↗</span></a>
+    </nav>
+    <details class="menu">
+      <summary><span class="sr-only">Menu</span><i></i><i></i><i></i></summary>
+      <nav aria-label="Mobile">
+        {nav.map((item) => <a href={url(item.href)} aria-current={current === `/${item.href}` ? 'page' : undefined}>{item.label}</a>)}
+        <a href={url('estimates/')}>Get a quote</a>
+        <a href={`tel:${business.tel}`}>Call {business.phone}</a>
+        <a href={`mailto:${business.email}`}>{business.email}</a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  .site-header { position: sticky; top: 0; z-index: 50; background: var(--surface-raised); border-bottom: var(--hairline) solid var(--accent); }
+  .bar { max-width: var(--container); margin: 0 auto; height: var(--header-height); padding: 0 var(--gutter); display: flex; align-items: center; justify-content: space-between; gap: var(--space-8); }
+  .logo { display: block; height: 32px; line-height: 0; }
+  .logo img { height: 100%; width: auto; }
+  .logo-dark { display: none; }
+  @media (prefers-color-scheme: dark) { .logo-light { display: none; } .logo-dark { display: block; } }
+  .nav { display: flex; align-items: center; gap: var(--space-8); }
+  .nav a:not(.btn) { color: var(--text); text-decoration: none; font: 500 14px/20px var(--font-body); letter-spacing: 0.06em; padding: var(--space-2) 0; border-bottom: 2px solid transparent; white-space: nowrap; }
+  .nav a:not(.btn):hover { border-bottom-color: var(--border); }
+  .nav a[aria-current='page'] { border-bottom-color: var(--accent); }
+  .menu { display: none; position: relative; }
+  .menu summary { list-style: none; cursor: pointer; width: var(--control-height); height: var(--control-height); display: grid; place-content: center; gap: 5px; }
+  .menu summary::-webkit-details-marker { display: none; }
+  .menu summary i { display: block; width: 22px; border-top: 1.5px solid var(--text); }
+  .menu nav { position: absolute; right: 0; top: calc(100% + 18px); width: min(300px, calc(100vw - 32px)); background: var(--surface-raised); border: var(--hairline) solid var(--border); display: grid; }
+  .menu nav a { padding: var(--space-4); text-decoration: none; font: 500 14px/20px var(--font-body); letter-spacing: 0.06em; border-bottom: var(--hairline) solid var(--border); }
+  .menu nav a:last-child { border-bottom: 0; }
+  .menu nav a[aria-current='page'] { box-shadow: inset 2px 0 0 var(--accent); }
+  @media (max-width: 1100px) { .nav { display: none; } .menu { display: block; } }
+  @media (max-width: 719px) { .logo { height: 26px; } .bar { height: 64px; } }
+</style>

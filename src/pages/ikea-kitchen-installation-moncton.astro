@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Photo from '../components/Photo.astro';
+import Quote from '../components/Quote.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import {reviews} from '../data/site';
+import {url} from '../data/url';
+import {faqSchema, serviceSchema, type FaqItem} from '../data/faq';
+
+const title = 'IKEA Kitchen Installation in Moncton, Dieppe & Riverview | Royalty Cabinets';
+const description = 'IKEA kitchen assembly and installation in Greater Moncton. Every box assembled and installed by a crew that installs cabinets every day. Book your own date. Send us your IKEA plan.';
+
+const steps = [
+  {title: 'Send us your plan', text: 'Your IKEA plan or order list, a photo of the room, and your timing.'},
+  {title: 'Lock in a date', text: 'Book the install for after your delivery. You control the timeline.'},
+  {title: 'We assemble and install', text: 'Every box built and installed by a crew that installs cabinets every day.'},
+  {title: 'Missing pieces flagged', text: 'Anything damaged or missing, you hear about right away, with photos.'},
+  {title: 'We clean up', text: 'Doors adjusted, final details done, and the mess gone before we leave.'},
+];
+
+const faq: FaqItem[] = [
+  {q: 'Who installs IKEA kitchens in Moncton?', a: 'We do. We assemble and install IKEA kitchens in Moncton, Dieppe, Riverview and the rest of Greater Moncton.'},
+  {q: 'Does IKEA’s own installation service cover Moncton?', a: 'Check with IKEA for your address. If their service doesn’t cover you, or the date doesn’t work, book a local crew directly. That’s us, and you pick the date.'},
+  {q: 'How much does it cost to install an IKEA kitchen?', a: 'It comes down to how many boxes there are and what the walls and floors are like. Send your IKEA plan and we’ll give you a straight number before anything starts.'},
+  {q: 'Do you assemble the cabinets too, or only install?', a: 'Both, as one job.'},
+  {q: 'Can you work from my IKEA plan?', a: 'Yes. Send it with your order list and a photo or two of the room.'},
+  {q: 'Is an IKEA kitchen a good idea?', a: 'Sometimes, yes. IKEA is still beautiful. It may not last as long as a locally made kitchen, but to get a house ready to sell, it’s often the smart call. For a rental, we usually suggest mid-range instead. We’ll tell you honestly.'},
+];
+---
+<Base
+  title={title}
+  description={description}
+  breadcrumb="IKEA kitchen installation"
+  schema={[serviceSchema('IKEA kitchen installation', description, 'Kitchen cabinet assembly and installation'), faqSchema(faq)]}
+>
+  <PageHero
+    eyebrow="IKEA kitchens"
+    title="IKEA kitchen installation <span class='accent-text'>in Moncton.</span>"
+    lede="Bought an IKEA kitchen? We assemble it and install it in Moncton, Dieppe, Riverview and the rest of Greater Moncton, on a date you pick."
+  >
+    <div slot="actions" class="actions">
+      <a class="btn" href={url('estimates/#homeowners')}>Send us your IKEA plan <span class="arrow" aria-hidden="true">↗</span></a>
+      <a class="arrow-link" href={url('installation/')}>Other cabinets <span aria-hidden="true">→</span></a>
+    </div>
+    <Photo shot="A finished IKEA kitchen Royalty installed in a Greater Moncton home (the recent flip would be ideal)." ratio="4 / 3" alt="An IKEA kitchen installed by Royalty Cabinets" />
+  </PageHero>
+
+  <section class="section sunken">
+    <div class="wrap grid-2">
+      <div class="stack">
+        <div class="section-header flush">
+          <p class="eyebrow">An honest take</p>
+          <h2>IKEA is still beautiful. It’s not for every project.</h2>
+        </div>
+        <div class="prose">
+          <p class="lead">Does it last as long? Is it as durable? There are pros and cons to every kind of kitchen. There’s a time and a place for every product.</p>
+          <p>We recently installed an IKEA kitchen for a client flipping an older home. His reasoning was right. If the house is decent but the kitchen is dated, $10,000 to $12,000 for an IKEA kitchen with installation makes it look good, and that cost gets absorbed when you sell. Put $30,000 into it and the buyer might rip it out anyway, because you can’t know what kitchen they want.</p>
+        </div>
+      </div>
+      <div class="fit">
+        <div class="card">
+          <h3>Usually a good fit</h3>
+          <ul class="checks">
+            <li>Flipping an older home</li>
+            <li>Getting a house ready to sell without overspending</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Think twice</h3>
+          <ul class="checks">
+            <li>A rental or an Airbnb: renters are hard on a kitchen, so go mid-range</li>
+            <li>A kitchen you want to last for decades</li>
+          </ul>
+          <span class="card-gap"></span>
+          <a class="arrow-link" href={url('installation/#investors')}>Flips and rentals <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-header">
+        <p class="eyebrow">How it works</p>
+        <h2>Knowing how is easy. Knowing why is the job.</h2>
+        <p class="lead">It’s easy to know how to put cabinets on a wall. It’s different to know why you start with a certain box, or why you adjust a certain way. That’s what we do, day in and day out.</p>
+      </div>
+      <ol class="steps">
+        {steps.map((s) => <li><h3>{s.title}</h3><p>{s.text}</p></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section sunken">
+    <div class="wrap grid-2 center-y">
+      <Photo shot="IKEA boxes staged in a room, crew checking labels against the plan." ratio="4 / 3" alt="Checking an IKEA delivery against the kitchen plan" />
+      <Quote review={reviews.nicolas} />
+    </div>
+  </section>
+
+  <CtaBand
+    eyebrow="IKEA kitchens"
+    title="Send us your IKEA plan."
+    text="Your plan or order list, a photo of the room, and when it’s being delivered."
+    href="estimates/#homeowners"
+    label="Get an IKEA install quote"
+  />
+
+  <Faq items={faq} />
+  <p class="wrap disclaimer caption">Royalty Cabinets is an independent installer and is not affiliated with IKEA. IKEA is a trademark of Inter IKEA Systems B.V.</p>
+</Base>
+
+<style>
+  .fit { display: grid; gap: var(--space-6); }
+  .fit h3 { margin-bottom: var(--space-3); }
+  .disclaimer { padding-bottom: var(--space-8); }
+</style>

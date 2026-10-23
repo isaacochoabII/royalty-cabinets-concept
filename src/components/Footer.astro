@@ -1,6 +1,7 @@
 ---
 import {business, nav} from '../data/site';
 import {url} from '../data/url';
+import Social from './Social.astro';
 const year = new Date().getFullYear();
 ---
 <footer class="site-footer">
@@ -9,6 +10,7 @@ const year = new Date().getFullYear();
       <div>
         <img class="logo" src={url('brand/logo-cream.png')} width="640" height="139" alt="Royalty Cabinets" loading="lazy" />
         <p>Cabinet installation for builders, developers, cabinet manufacturers and homeowners. Based in Dieppe.</p>
+        <Social />
       </div>
       <div>
         <h2 class="col-head">Contact</h2>
@@ -28,7 +30,7 @@ const year = new Date().getFullYear();
     </div>
     <div class="base">
       <span>© {year} Royalty Cabinets</span>
-      <a href={business.facebook} rel="noopener">Facebook</a>
+      <span>{business.city}, New Brunswick</span>
     </div>
   </div>
 </footer>
@@ -41,6 +43,5 @@ const year = new Date().getFullYear();
   a, p { display: block; margin: 0 0 var(--space-2); font-size: 14px; line-height: 22px; letter-spacing: 0.02em; color: var(--text-inverse); text-decoration: none; max-width: 340px; }
   a:hover { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 4px; }
   .base { display: flex; justify-content: space-between; gap: var(--space-4); margin-top: var(--space-12); padding-top: var(--space-6); border-top: var(--hairline) solid var(--accent); font-size: 12px; line-height: 18px; letter-spacing: 0.04em; }
-  .base a { display: inline; margin: 0; font-size: 12px; }
   @media (max-width: 719px) { .cols { grid-template-columns: 1fr 1fr; } .cols > div:first-child { grid-column: 1 / -1; } }
 </style>

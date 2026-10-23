@@ -36,7 +36,7 @@ const businessSchema = {
     addressCountry: 'CA',
   },
   areaServed: business.areas,
-  sameAs: [business.facebook],
+  sameAs: business.social.map((s) => s.url),
 };
 const crumbs = breadcrumb && {
   '@context': 'https://schema.org',

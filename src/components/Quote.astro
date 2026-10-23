@@ -3,10 +3,12 @@
 import type {Review} from '../data/site';
 interface Props { review: Review; small?: boolean }
 const {review, small = false} = Astro.props;
+// Some reviews have no context beyond "Google review"; don't print it twice.
+const caption = [review.name, review.context, 'Google review'].filter((part, i, all) => all.indexOf(part) === i).join(' · ');
 ---
 <figure class:list={['quote', {small}]}>
   <blockquote><p>“{review.quote}”</p></blockquote>
-  <figcaption>{review.name} · {review.context} · Google review</figcaption>
+  <figcaption>{caption}</figcaption>
 </figure>
 
 <style>

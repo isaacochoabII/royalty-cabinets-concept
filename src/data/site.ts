@@ -11,7 +11,11 @@ export const business = {
   city: 'Dieppe',
   region: 'NB',
   postal: 'E1A 0N7',
-  facebook: 'https://www.facebook.com/RoyaltyCabinet/',
+  social: [
+    {name: 'Instagram', url: 'https://www.instagram.com/royalty_cabinets/'},
+    {name: 'Facebook', url: 'https://www.facebook.com/RoyaltyCabinet'},
+    {name: 'LinkedIn', url: 'https://www.linkedin.com/company/103493571/'},
+  ],
   // From Raphael on camera: Moncton, Riverview, Greater Moncton, Nova Scotia, PEI; Phil: Fredericton projects.
   areas: ['Moncton', 'Dieppe', 'Riverview', 'Fredericton', 'Nova Scotia', 'Prince Edward Island'],
 };

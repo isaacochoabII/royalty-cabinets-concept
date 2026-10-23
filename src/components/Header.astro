@@ -1,6 +1,7 @@
 ---
 import {business, nav} from '../data/site';
 import {url, sitePath} from '../data/url';
+import Social from './Social.astro';
 const current = sitePath(Astro.url.pathname);
 
 // Full-screen menu (lifmedia.ca style): big page links, two link columns, contact sidebar.
@@ -75,7 +76,7 @@ const columns = [
       </div>
       <div>
         <p class="eyebrow">Follow</p>
-        <a href={business.facebook} rel="noopener">Facebook</a>
+        <Social />
       </div>
       <a class="btn btn-inverse" href={url('estimates/')}>Get a quote <span class="arrow" aria-hidden="true">↗</span></a>
     </aside>

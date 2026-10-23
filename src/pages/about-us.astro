@@ -1,0 +1,151 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Photo from '../components/Photo.astro';
+import Quote from '../components/Quote.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import {business, facts, reviews} from '../data/site';
+import {url} from '../data/url';
+import {faqSchema, type FaqItem} from '../data/faq';
+
+// Copy comes from the current royaltycabinets.ca About and Careers pages and from Raphael on camera (Oct 16 shoot).
+const title = 'About Royalty Cabinets | Cabinet Installers in Dieppe & Moncton';
+const description = 'Royalty Cabinets is a cabinet installation company based in Dieppe, NB. There’s no trade dedicated to installing cabinets, so we built one. Meet Raphael Lajoie and the crew.';
+
+const principles = [
+  {title: 'We get it done', text: 'When we show up for a job, we come prepared and on time. Our focus is simple: get in, get the job done, with as few delays as possible.'},
+  {title: 'We move projects along', text: 'In most projects the stalling point is that final 10%. We look beyond our own job to see what we can do to help get the project complete.'},
+  {title: 'We work well with trades', text: 'Painters, plumbers, electricians, decorators. Communication is key: understanding how our work affects other trades, and how we work together to keep the project moving.'},
+  {title: 'We hate delays and disruptions', text: 'There’s no such thing as over-prepared. We plan each job before the crew shows up, so nobody’s running back to the shop for a tool or the right hardware.'},
+  {title: 'We have a great team', text: 'Seasoned veterans with decades in construction and cabinet installation, alongside new, talented installers eager to be the best.'},
+  {title: 'Our word is our bond', text: 'If we say we’re going to do it, we’re going to do our best to get it done. Every project is different. Our approach stays the same.'},
+];
+
+const faq: FaqItem[] = [
+  {q: 'Where is Royalty Cabinets based?', a: `In Dieppe, at ${business.street}. We work across Greater Moncton every day, and in Fredericton, Nova Scotia and PEI when the project calls for it.`},
+  {q: 'Do you sell or design cabinets?', a: 'No. We install. You buy the cabinets wherever makes sense for your project, and we install them.'},
+  {q: 'Who do you work for?', a: 'Builders and developers on multi-unit projects, cabinet manufacturers who need an install crew, and homeowners and investors who already bought their cabinets.'},
+  {q: 'Are you hiring?', a: `We’re looking for installers who are driven, willing to make it happen, and want to keep growing. Email <a href="mailto:${business.email}?subject=Joining%20the%20crew">${business.email}</a>.`},
+];
+
+const aboutSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: 'About Royalty Cabinets',
+  description,
+  mainEntity: {'@id': 'https://royaltycabinets.ca/#business'},
+};
+---
+<Base title={title} description={description} breadcrumb="About us" schema={[aboutSchema, faqSchema(faq)]}>
+  <PageHero
+    eyebrow="About us"
+    title="There’s no trade dedicated to installing cabinets. <span class='accent-text'>So we built one.</span>"
+    lede="Royalty Cabinets is a cabinet installation company based in Dieppe. Our experience has taught us that the cabinets make the kitchen, so we built the business around one simple idea: be the best cabinet installers in the industry."
+  >
+    <div slot="actions" class="actions">
+      <a class="btn" href={url('estimates/')}>Work with us <span class="arrow" aria-hidden="true">↗</span></a>
+      <a class="arrow-link" href={url('builders/#how')}>How we run a building <span aria-hidden="true">→</span></a>
+    </div>
+    <Photo src="photos/installer-setting-panel" ratio="4 / 5" position="40% center" eager alt="A Royalty Cabinets installer setting a tall cabinet panel" />
+  </PageHero>
+
+  <section class="section sunken">
+    <div class="wrap grid-2">
+      <div class="section-header flush">
+        <p class="eyebrow">Who we are</p>
+        <h2>We’re not a jack of all trades. We install cabinets.</h2>
+      </div>
+      <div class="prose">
+        <p class="lead">Just because we have experience in construction and renovation doesn’t mean we’re ready to install a toilet or hang drywall. We focus on what we do, and on doing it really well. If the project needs a plumber or an electrician, we call them in so the work gets done right.</p>
+        <p>There was a time we were nervous to take on a 24-unit building. Now it’s: bring on the 84, the 100-plus. Every project is different, but our approach always stays the same. We’ve never seen a project as too big to take care of.</p>
+        <p>We don’t have the biggest team. We have an efficient one. Cabinets installed in {facts.installed} {facts.installedLabel}, for multi-unit builders, for the cabinet manufacturers we install for, and for homeowners across Greater Moncton.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-header">
+        <p class="eyebrow">How we work</p>
+        <h2>Six things you can count on</h2>
+      </div>
+      <div class="grid-3 principles">
+        {principles.map((p) => <div class="feature"><h3>{p.title}</h3><p>{p.text}</p></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section sunken">
+    <div class="wrap grid-2">
+      <div class="stack">
+        <div class="section-header flush">
+          <p class="eyebrow">The owner</p>
+          <h2>Raphael Lajoie</h2>
+        </div>
+        <div class="prose">
+          <p class="lead">“I was raised in a family that was mostly in business, and it made me business-minded at a young age. Growing up, I looked up to my grandfather and my dad, who both built very successful businesses. It inspired me and shaped who I am today. Finding an industry where I could thrive and make an impact in the community was something I always dreamed of.”</p>
+          <p>“After years of side hustles (snow removal, making and selling beef jerky, selling used vehicles, car detailing), I decided it was time to take it to the next level, and I opened Royalty Cabinets: a company focused on installation for multiple suppliers in the area. Providing quality installation and project management to the public and to suppliers is what I love to do.”</p>
+          <p>“Serving at the highest level means asking what I can do to exceed what I did yesterday, so I can serve my clients better tomorrow. Not just what my guys can do. What can I do, as an owner, to be better?”</p>
+        </div>
+      </div>
+      <Photo shot="Portrait of Raphael on site. Confirm which photo from the Oct 16 shoot is him before using it." ratio="4 / 5" alt="Raphael Lajoie, owner of Royalty Cabinets" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid-2">
+      <div class="section-header flush">
+        <p class="eyebrow">Accountability</p>
+        <h2>Mistakes happen. It’s what you do with them.</h2>
+      </div>
+      <div class="prose">
+        <p class="big-line">“My word is my bond. If I say we’re going to do something, we’re going to do our best to get it done.”</p>
+        <p>Fifteen years ago, on the tenth floor of a fifteen-storey building in Halifax, we hit a water pipe. We didn’t know where the shut-off valve was. We made the calls, got the shop vacs in, cleaned up, got it patched, and got back to work. That’s the point: it’s not about never making a mistake. It’s about what you learn from it, and what you can teach so others don’t make the same one.</p>
+        <p>Accountability goes both ways on a job site. When something isn’t working, we say so, with respect. It’s not calling you out. It’s calling you up.</p>
+        <p class="muted">And when someone calls us for something we don’t do, we don’t just say no. We tell them who does, and who to call.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section sunken">
+    <div class="wrap grid-2 center-y">
+      <Photo src="photos/installer-in-kitchen" ratio="4 / 5" position="48% center" alt="A Royalty Cabinets installer walking through a kitchen on site" />
+      <div class="stack">
+        <div class="section-header flush">
+          <p class="eyebrow">The crew</p>
+          <h2>Phil is the proof of the concept.</h2>
+        </div>
+        <div class="prose">
+          <p class="lead">Phil, our foreman, has been installing with Royalty for over six years. He runs the crew on site and he’s the voice between Raphael and the guys, so communication and results stay consistent.</p>
+          <p>“It’s pretty much always the same, but always different. Every kitchen is different. Sometimes we do houses, sometimes apartments.” What he likes about leading: “Freedom, and helping people. Being able to manage the building from A to Z.”</p>
+          <p>It’s not a dictatorship. When Phil is firm on how something gets done, it’s because he knows it gets results, and he’ll explain why. And when a job needs more from the crew, Raphael asks instead of tells: “It’s always ‘do you guys want to work?’, not ‘I need you guys to work.’ When I ask, it’s usually a yes.”</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid-2 center-y">
+      <div class="section-header flush">
+        <p class="eyebrow">Reviews</p>
+        <h2>{facts.rating} on Google from {facts.reviewCount} reviews.</h2>
+      </div>
+      <Quote review={reviews.jg} />
+    </div>
+  </section>
+
+  <CtaBand
+    eyebrow="Work with us"
+    title="Tell us what you’re building."
+    text="Drawings and dates, or a photo of the cabinets you bought."
+    href="estimates/"
+    label="Get a quote"
+  />
+
+  <Faq items={faq} title="About us, in short" />
+</Base>
+
+<style>
+  .principles { row-gap: var(--space-12); }
+</style>

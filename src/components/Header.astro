@@ -2,6 +2,32 @@
 import {business, nav} from '../data/site';
 import {url, sitePath} from '../data/url';
 const current = sitePath(Astro.url.pathname);
+
+// Full-screen menu (lifmedia.ca style): big page links, two link columns, contact sidebar.
+const pages = [
+  {href: '', label: 'Home'},
+  {href: 'builders/', label: 'Builders'},
+  {href: 'installation/', label: 'Installation'},
+  {href: 'ikea-kitchen-installation-moncton/', label: 'IKEA kitchens'},
+  {href: 'about-us/', label: 'About us'},
+  {href: 'estimates/', label: 'Get a quote'},
+];
+const columns = [
+  {title: 'Installation', links: [
+    {href: 'builders/#how', label: 'Multi-unit projects'},
+    {href: 'installation/#types', label: 'Kitchen cabinets'},
+    {href: 'ikea-kitchen-installation-moncton/', label: 'IKEA kitchens'},
+    {href: 'installation/#flat-pack', label: 'Flat-pack assembly'},
+    {href: 'installation/#types', label: 'Bathroom vanities'},
+  ]},
+  {title: 'Who we work for', links: [
+    {href: 'builders/', label: 'Builders & developers'},
+    {href: 'builders/#manufacturers', label: 'Cabinet manufacturers'},
+    {href: 'installation/#contractors', label: 'Contractors'},
+    {href: 'installation/', label: 'Homeowners'},
+    {href: 'installation/#investors', label: 'Flips & rentals'},
+  ]},
+];
 ---
 <header class="site-header">
   <div class="bar">
@@ -12,39 +38,117 @@ const current = sitePath(Astro.url.pathname);
     <nav class="nav" aria-label="Main">
       {nav.map((item) => <a href={url(item.href)} aria-current={current === `/${item.href}` ? 'page' : undefined}>{item.label}</a>)}
       <a href={`tel:${business.tel}`}>{business.phone}</a>
-      <a class="btn btn-sm" href={url('estimates/')}>Get a quote <span class="arrow" aria-hidden="true">↗</span></a>
     </nav>
-    <details class="menu">
-      <summary><span class="sr-only">Menu</span><i></i><i></i><i></i></summary>
-      <nav aria-label="Mobile">
-        {nav.map((item) => <a href={url(item.href)} aria-current={current === `/${item.href}` ? 'page' : undefined}>{item.label}</a>)}
-        <a href={url('estimates/')}>Get a quote</a>
-        <a href={`tel:${business.tel}`}>Call {business.phone}</a>
-        <a href={`mailto:${business.email}`}>{business.email}</a>
-      </nav>
-    </details>
+    <div class="end">
+      <a class="btn btn-sm quote" href={url('estimates/')}>Get a quote <span class="arrow" aria-hidden="true">↗</span></a>
+      <button class="menu-toggle" type="button" aria-haspopup="dialog" aria-controls="site-menu" data-menu-open>
+        <span>Menu</span><i aria-hidden="true"></i>
+      </button>
+    </div>
   </div>
 </header>
+
+<dialog id="site-menu" class="menu" aria-label="Site menu">
+  <div class="menu-top">
+    <a class="logo" href={url()}><img src={url('brand/logo-cream.png')} width="640" height="139" alt="Royalty Cabinets" /></a>
+    <button class="menu-toggle" type="button" data-menu-close><span>Close</span><i aria-hidden="true"></i></button>
+  </div>
+  <div class="menu-body">
+    <nav class="menu-pages" aria-label="Pages">
+      {pages.map((p) => <a href={url(p.href)} aria-current={current === `/${p.href}` ? 'page' : undefined}>{p.label}</a>)}
+    </nav>
+    {columns.map((col) => (
+      <nav class="menu-col" aria-label={col.title}>
+        <p class="menu-col-title">{col.title}</p>
+        {col.links.map((l) => <a href={url(l.href)}>{l.label}</a>)}
+      </nav>
+    ))}
+    <aside class="menu-side">
+      <div>
+        <p class="eyebrow">Contact</p>
+        <a href={`tel:${business.tel}`}>{business.phone}</a>
+        <a href={`mailto:${business.email}`}>{business.email}</a>
+      </div>
+      <div>
+        <p class="eyebrow">Location</p>
+        <p>{business.street}<br />{business.city}, New Brunswick<br />Canada</p>
+      </div>
+      <div>
+        <p class="eyebrow">Follow</p>
+        <a href={business.facebook} rel="noopener">Facebook</a>
+      </div>
+      <a class="btn btn-inverse" href={url('estimates/')}>Get a quote <span class="arrow" aria-hidden="true">↗</span></a>
+    </aside>
+  </div>
+</dialog>
+
+<script>
+  const menu = document.getElementById('site-menu') as HTMLDialogElement;
+  const opener = document.querySelector<HTMLButtonElement>('[data-menu-open]')!;
+  opener.addEventListener('click', () => menu.showModal());
+  menu.querySelector('[data-menu-close]')!.addEventListener('click', () => menu.close());
+  // Same-page anchors should close the menu so the section is visible.
+  menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => menu.close()));
+  menu.addEventListener('close', () => opener.focus());
+</script>
 
 <style>
   .site-header { position: sticky; top: 0; z-index: 50; background: var(--surface-raised); border-bottom: var(--hairline) solid var(--accent); }
   .bar { max-width: var(--container); margin: 0 auto; height: var(--header-height); padding: 0 var(--gutter); display: flex; align-items: center; justify-content: space-between; gap: var(--space-8); }
-  .logo { display: block; height: 32px; line-height: 0; }
+  .logo { display: block; height: 32px; line-height: 0; flex: none; }
   .logo img { height: 100%; width: auto; }
   .logo-dark { display: none; }
   @media (prefers-color-scheme: dark) { .logo-light { display: none; } .logo-dark { display: block; } }
-  .nav { display: flex; align-items: center; gap: var(--space-8); }
-  .nav a:not(.btn) { color: var(--text); text-decoration: none; font: 500 14px/20px var(--font-body); letter-spacing: 0.06em; padding: var(--space-2) 0; border-bottom: 2px solid transparent; white-space: nowrap; }
-  .nav a:not(.btn):hover { border-bottom-color: var(--border); }
+  .nav { display: flex; align-items: center; gap: var(--space-8); margin-left: auto; }
+  .nav a { color: var(--text); text-decoration: none; font: 500 14px/20px var(--font-body); letter-spacing: 0.06em; padding: var(--space-2) 0; border-bottom: 2px solid transparent; white-space: nowrap; }
+  .nav a:hover { border-bottom-color: var(--border); }
   .nav a[aria-current='page'] { border-bottom-color: var(--accent); }
-  .menu { display: none; position: relative; }
-  .menu summary { list-style: none; cursor: pointer; width: var(--control-height); height: var(--control-height); display: grid; place-content: center; gap: 5px; }
-  .menu summary::-webkit-details-marker { display: none; }
-  .menu summary i { display: block; width: 22px; border-top: 1.5px solid var(--text); }
-  .menu nav { position: absolute; right: 0; top: calc(100% + 18px); width: min(300px, calc(100vw - 32px)); background: var(--surface-raised); border: var(--hairline) solid var(--border); display: grid; }
-  .menu nav a { padding: var(--space-4); text-decoration: none; font: 500 14px/20px var(--font-body); letter-spacing: 0.06em; border-bottom: var(--hairline) solid var(--border); }
-  .menu nav a:last-child { border-bottom: 0; }
-  .menu nav a[aria-current='page'] { box-shadow: inset 2px 0 0 var(--accent); }
-  @media (max-width: 1100px) { .nav { display: none; } .menu { display: block; } }
-  @media (max-width: 719px) { .logo { height: 26px; } .bar { height: 64px; } }
+  .end { display: flex; align-items: center; gap: var(--space-6); }
+
+  .menu-toggle { display: inline-flex; align-items: center; gap: var(--space-3); min-height: var(--control-height); padding: 0; background: none; border: 0; cursor: pointer; color: var(--text); font: 500 12px/16px var(--font-body); letter-spacing: 0.28em; text-transform: uppercase; }
+  .menu-toggle i { display: block; width: 28px; border-top: var(--hairline) solid currentColor; position: relative; }
+  .menu-toggle i::after { content: ''; position: absolute; left: 8px; right: 0; top: 5px; border-top: var(--hairline) solid currentColor; transition: left 200ms ease-out; }
+  .menu-toggle:hover i::after { left: 0; }
+  .menu-top .menu-toggle i::after { display: none; }
+
+  /* Overlay */
+  .menu { width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: var(--surface-inverse); color: var(--text-inverse); overflow-y: auto; }
+  .menu[open] { display: flex; flex-direction: column; animation: menu-in 240ms ease-out; }
+  .menu::backdrop { background: transparent; }
+  :global(html:has(dialog[open])) { overflow: hidden; }
+  @keyframes menu-in { from { opacity: 0; } to { opacity: 1; } }
+  .menu-top { width: 100%; max-width: var(--container); margin: 0 auto; height: var(--header-height); padding: 0 var(--gutter); display: flex; align-items: center; justify-content: space-between; flex: none; }
+  .menu-top .menu-toggle { color: var(--text-inverse); }
+  .menu-body { width: 100%; max-width: var(--container); margin: 0 auto; padding: var(--space-12) var(--gutter) var(--space-16); flex: 1; display: grid; grid-template-columns: 1.3fr 1fr 1.15fr 0.9fr; gap: var(--space-12); align-content: start; }
+  .menu a:not(.btn) { color: var(--text-inverse); text-decoration: none; }
+  .menu-pages { display: grid; gap: var(--space-2); align-content: start; }
+  .menu-pages a { font: 300 52px/1.15 var(--font-heading); letter-spacing: 0.01em; width: fit-content; border-bottom: var(--hairline) solid transparent; transition: border-color 200ms ease-out; }
+  .menu-pages a:hover, .menu-pages a[aria-current='page'] { border-bottom-color: var(--accent); }
+  .menu-col { display: grid; gap: var(--space-4); align-content: start; }
+  .menu-col-title { margin: 0 0 var(--space-4); font: 400 32px/40px var(--font-heading); letter-spacing: 0.02em; color: var(--text-inverse); }
+  .menu-col a:not(.btn) { font: 300 20px/28px var(--font-heading); letter-spacing: 0.02em; color: var(--inverse-muted); width: fit-content; }
+  .menu-col a:not(.btn):hover { color: var(--text-inverse); }
+  .menu-side { display: grid; gap: var(--space-8); align-content: start; padding-left: var(--space-8); border-left: var(--hairline) solid var(--inverse-border); }
+  .menu-side .eyebrow { color: var(--inverse-muted); margin-bottom: var(--space-3); }
+  .menu-side a:not(.btn), .menu-side p:not(.eyebrow) { display: block; margin: 0 0 var(--space-1); font-size: 14px; line-height: 22px; letter-spacing: 0.02em; }
+  .menu-side a:not(.btn):hover { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 4px; }
+  .menu-side .btn { justify-self: start; }
+
+  @media (max-width: 1100px) {
+    .nav { display: none; }
+    .menu-body { grid-template-columns: 1fr 1fr; }
+    .menu-pages { grid-column: 1 / -1; }
+    .menu-side { grid-column: 1 / -1; padding-left: 0; border-left: 0; padding-top: var(--space-8); border-top: var(--hairline) solid var(--inverse-border); grid-template-columns: repeat(3, auto); justify-content: start; column-gap: var(--space-12); }
+    .menu-side .btn { grid-column: 1 / -1; }
+  }
+  @media (max-width: 719px) {
+    .logo { height: 26px; } .bar, .menu-top { height: 64px; }
+    .quote { display: none; }
+    .menu-body { grid-template-columns: 1fr; gap: var(--space-8); padding-top: var(--space-6); }
+    .menu-pages a { font-size: 36px; }
+    .menu-col-title { font-size: 26px; line-height: 34px; margin-bottom: var(--space-2); }
+    .menu-col a { font-size: 18px; }
+    .menu-side { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) { .menu[open] { animation: none; } }
 </style>

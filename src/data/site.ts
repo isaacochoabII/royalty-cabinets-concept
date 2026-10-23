@@ -26,6 +26,7 @@ export const nav = [
   {href: 'builders/', label: 'Builders & developers'},
   {href: 'installation/', label: 'Installation'},
   {href: 'ikea-kitchen-installation-moncton/', label: 'IKEA kitchens'},
+  {href: 'about-us/', label: 'About'},
 ];
 
 export const facts = {
@@ -80,6 +81,11 @@ export const reviews: Record<string, Review> = {
   hailey: {
     quote: 'Consistently providing in depth knowledge and advice. Professional, experienced & kind!',
     name: 'Hailey',
+    context: 'Google review',
+  },
+  jg: {
+    quote: 'This team is incredible! They leave a positive vibe wherever they work!',
+    name: 'JG',
     context: 'Google review',
   },
   nicolas: {

@@ -10,13 +10,16 @@ import {url} from '../data/url';
 import {faqSchema, serviceSchema, type FaqItem} from '../data/faq';
 
 const title = 'Kitchen Cabinet Installation in Moncton, Dieppe & Riverview | Royalty Cabinets';
-const description = 'Bought your cabinets at Kent, Home Depot, Home Hardware or IKEA, ordered flat-pack, or from a local manufacturer? We assemble and install kitchens and vanities across Greater Moncton, on a date you pick.';
+const description = 'Cabinet installation in Greater Moncton for homeowners, contractors and multi-unit builders. Cabinets from Kent, Home Depot, Home Hardware, IKEA, flat-pack or any local manufacturer, installed on a date you pick.';
 
-const sources = [
+// The installation types from the current royaltycabinets.ca/installation page, minus "We Supply" (installation only).
+const types = [
+  {title: 'Store-bought', text: 'Cabinets from local home renovation and hardware stores like Kent, Home Depot and Home Hardware, installed on your date.', href: 'estimates/#homeowners', link: 'Get a quote'},
   {title: 'IKEA', text: 'Your IKEA kitchen, assembled and installed.', href: 'ikea-kitchen-installation-moncton/', link: 'IKEA installation'},
-  {title: 'Kent, Home Depot, Home Hardware', text: 'Store-bought cabinets installed on your date, not when their crew gets to you.', href: 'estimates/#homeowners', link: 'Get a quote'},
-  {title: 'Flat-pack', text: 'Ready-to-assemble cabinets shipped to your door. We build every box and install it.', href: '#flat-pack', link: 'How flat-pack works'},
-  {title: 'A local manufacturer', text: 'Your cabinets are on order from a local shop. We install them on schedule.', href: 'estimates/#homeowners', link: 'Get a quote'},
+  {title: 'Flat-pack', text: 'Ready-to-assemble cabinets shipped to your door. We build every box, then install it.', href: '#flat-pack', link: 'How flat-pack works'},
+  {title: 'Local manufacturer', text: 'Cabinets purchased from any local cabinet manufacturer, installed like they’re ours.', href: 'estimates/#homeowners', link: 'Get a quote'},
+  {title: 'Contractors', text: 'We have a lot of experience helping contractors complete their projects efficiently and on time.', href: '#contractors', link: 'For contractors'},
+  {title: 'Multi-unit', text: 'Cabinets installed in 500+ apartments and condos. We understand the logistics of a multi-unit building.', href: 'builders/', link: 'For builders'},
 ];
 
 const included = [
@@ -36,6 +39,7 @@ const faq: FaqItem[] = [
   {q: 'Do you assemble flat-pack cabinets?', a: 'Yes, assembly and installation as one job. We do it on multi-unit buildings, so your kitchen gets the same crew.'},
   {q: 'What if a cabinet arrives damaged or a piece is missing?', a: 'We tell you exactly what’s missing or damaged, with photos, so you can get it replaced. We install everything else and come back to finish that piece.'},
   {q: 'Do you install bathroom vanities?', a: 'Yes, vanities and linen cabinets, on their own or with a kitchen.'},
+  {q: 'Do you work with contractors?', a: 'Yes. We have a lot of experience working with contractors on renovations, new construction and multi-unit buildings to help them finish efficiently and on time.'},
   {q: 'Do you sell or design cabinets?', a: 'No. We install. You buy the cabinets wherever makes sense for your project, and we install them.'},
   {q: 'What areas do you cover?', a: 'Moncton, Dieppe, Riverview and Greater Moncton. Ask us about anything further out.'},
 ];
@@ -49,7 +53,7 @@ const faq: FaqItem[] = [
   <PageHero
     eyebrow="Cabinet installation"
     title="You bought the cabinets. <span class='accent-text'>We’ll install them right.</span>"
-    lede="Kent, Home Depot, Home Hardware, IKEA, flat-pack shipped to your door, or a local manufacturer. Kitchens and vanities, installed by the same crew that does multi-unit buildings."
+    lede="We built our business around one simple idea: be the best cabinet installers in the industry. Our crews have installed cabinets in thousands of kitchens, bathrooms and custom projects, with the right team and the right equipment to get it done efficiently, professionally and on time."
   >
     <div slot="actions" class="actions">
       <a class="btn" href={url('estimates/#homeowners')}>Get an install quote <span class="arrow" aria-hidden="true">↗</span></a>
@@ -58,15 +62,15 @@ const faq: FaqItem[] = [
     <Photo src="photos/finished-kitchen" ratio="4 / 3" eager alt="A kitchen installed by Royalty Cabinets: wood-grain cabinets, a tall pantry and a black faucet" />
   </PageHero>
 
-  <section class="section sunken">
+  <section class="section sunken" id="types">
     <div class="wrap">
       <div class="section-header">
-        <p class="eyebrow">Your cabinets</p>
-        <h2>Buy wherever you want. We install what you bring us.</h2>
+        <p class="eyebrow">Installation types</p>
+        <h2>Wherever the cabinets came from, we install them.</h2>
         <p class="lead">A lot of people don’t know this is an option. You don’t have to take a seven-out-of-ten cabinet because the store includes installation. Buy the nine-out-of-ten and have it installed separately.</p>
       </div>
-      <div class="grid-4">
-        {sources.map((s) => (
+      <div class="grid-3 types">
+        {types.map((s) => (
           <a class="card" href={url(s.href)}>
             <h3>{s.title}</h3>
             <p>{s.text}</p>
@@ -98,7 +102,24 @@ const faq: FaqItem[] = [
     </div>
   </section>
 
-  <section class="section sunken" id="flat-pack">
+  <section class="section sunken" id="contractors">
+    <div class="wrap grid-2 center-y">
+      <div class="stack">
+        <div class="section-header flush">
+          <p class="eyebrow">Contractors</p>
+          <h2>One less trade to chase.</h2>
+        </div>
+        <div class="prose">
+          <p class="lead">Renovation or new construction, we have a lot of experience working with contractors to help them complete their projects efficiently and on time.</p>
+          <p>It’s the same way we run multi-unit buildings. We ask the questions before we start. We show up prepared, so nobody’s running back to the shop for a tool. If we won’t be on site, you hear it in advance. And we never push the trade in front of us or slow down the one behind us.</p>
+        </div>
+        <a class="btn" href={url('estimates/#builders')}>Send us the job <span class="arrow" aria-hidden="true">↗</span></a>
+      </div>
+      <Quote review={reviews.shawn} />
+    </div>
+  </section>
+
+  <section class="section" id="flat-pack">
     <div class="wrap grid-2 center-y">
       <Photo src="photos/installer-setting-panel" ratio="4 / 3" alt="A Royalty Cabinets installer setting a tall cabinet panel" />
       <div class="stack">
@@ -114,7 +135,7 @@ const faq: FaqItem[] = [
     </div>
   </section>
 
-  <section class="section" id="investors">
+  <section class="section sunken" id="investors">
     <div class="wrap grid-2">
       <div class="stack">
         <div class="section-header flush">
@@ -131,7 +152,7 @@ const faq: FaqItem[] = [
     <div class="wrap investor-quote"><Quote review={reviews.hailey} /></div>
   </section>
 
-  <section class="section sunken">
+  <section class="section">
     <div class="wrap">
       <div class="section-header">
         <p class="eyebrow">How it works</p>
@@ -146,7 +167,7 @@ const faq: FaqItem[] = [
     </div>
   </section>
 
-  <section class="section">
+  <section class="section sunken">
     <div class="wrap grid-2 center-y">
       <div class="section-header flush">
         <p class="eyebrow">Reviews</p>
@@ -170,4 +191,5 @@ const faq: FaqItem[] = [
 <style>
   .included h3 { margin-bottom: var(--space-4); }
   .investor-quote { margin-top: var(--space-12); }
+  .types { row-gap: var(--space-8); }
 </style>
